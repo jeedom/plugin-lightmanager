@@ -1,20 +1,16 @@
 {
-	"id" : "template",
-	"name" : "Template",
-	"description" : "Plugin template pour la création de plugin",
+	"id" : "lightmanager",
+	"name" : "Light manager",
+	"description" : "Plugin permettant la gestion des lumières",
 	"licence" : "AGPL",
 	"author" : "Jeedom SAS",
-	"require" : "3.2",
-	"category" : "programming",
+	"require" : "4.0",
+	"category" : "automation",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
 	"maxDependancyInstallTime" : 0,
-	"changelog" : "https://jeedom.github.io/plugin-template/#language#/changelog",
-	"documentation" : "https://jeedom.github.io/plugin-template/#language#/",
-	"link" : {
-		"forum":"Lien vers le forum",
-		"video" : "Lien vers une video"
-	},
+	"changelog" : "https://jeedom.github.io/plugin-lightmanager/#language#/changelog",
+	"documentation" : "https://jeedom.github.io/plugin-lightmanager/#language#/",
 	"language" : ["fr_FR","en_US","de_DE","sp_SP","ru_RU","id_ID","it_IT"],
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"]
 }
