@@ -46,8 +46,11 @@ $eqLogics = eqLogic::byType($plugin->getId());
 		</div>
 		<ul class="nav nav-tabs" role="tablist">
 			<li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
-			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Equipement}}</a></li>
-			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
+			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Général}}</a></li>
+			<li role="presentation"><a href="#lighttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-lightbulb"></i> {{Lumière}}</a></li>
+			<li role="presentation"><a href="#presencetab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-female"></i> {{Présence}}</a></li>
+			<li role="presentation"><a href="#luminositytab" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-sun"></i> {{Luminosité}}</a></li>
+			<li role="presentation"><a href="#timmertab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-hourglass-start"></i> {{Temporisation}}</a></li>
 		</ul>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab">
@@ -55,7 +58,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				<form class="form-horizontal">
 					<fieldset>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">{{Nom de l'équipement template}}</label>
+							<label class="col-sm-3 control-label">{{Nom de l'équipement}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
 								<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement template}}"/>
@@ -93,26 +96,26 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">{{template param 1}}</label>
-							<div class="col-sm-3">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="city" placeholder="param1"/>
-							</div>
-						</div>
 					</fieldset>
 				</form>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="commandtab">
-				<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/><br/>
-				<table id="table_cmd" class="table table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>{{Nom}}</th><th>{{Type}}</th><th>{{Action}}</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
+			<div role="tabpanel" class="tab-pane" id="lighttab">
+				<a class="btn btn-success btn-xs pull-right" id="bt_addLight"><i class="fas fa-plus-circle"></i> {{Ajouter lumieres}}</a>
+				<div id="div_lights"></div>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="presencetab">
+				<a class="btn btn-success btn-xs pull-right" id="bt_addPresence"><i class="fas fa-plus-circle"></i> {{Ajouter présence}}</a>
+				<div id="div_presences"></div>
+				
+			</div>
+			<div role="tabpanel" class="tab-pane" id="luminositytab">
+				<a class="btn btn-success btn-xs pull-right" id="bt_addLuminosity"><i class="fas fa-plus-circle"></i> {{Ajouter luminosité}}</a>
+				<div id="div_luminositys"></div>
+				
+			</div>
+			<div role="tabpanel" class="tab-pane" id="timmertab">
+				
+				
 			</div>
 		</div>
 	</div>
