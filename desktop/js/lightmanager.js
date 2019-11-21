@@ -27,14 +27,106 @@ $("#div_luminositys").off('click','.bt_removeLuminosity').on('click','.bt_remove
   $(this).closest('.luminosity').remove();
 });
 
-$('#btn_addRazAlarm').off('click').on('click', function () {
-  addAction({}, 'raz', '{{Réinitialisation}}');
+$('#bt_addLight').off('click').on('click', function () {
+  addLight({});
 });
 
-$('#btn_addRazAlarm').off('click').on('click', function () {
-  addAction({}, 'raz', '{{Réinitialisation}}');
+$('#bt_addPresence').off('click').on('click', function () {
+  addPresence({});
 });
 
 $('#bt_addLuminosity').off('click').on('click', function () {
-  addAction({}, 'raz', '{{Réinitialisation}}');
+  addLuminosity({});
 });
+
+
+function addLight(_light) {
+  if (!isset(_light)) {
+    _light = {};
+  }
+  var div = '<div class="light">';
+  div += '<form class="form-horizontal">';
+  div += '<fieldset>';
+  div += '<legend>{{Lumière}}</legend>';
+  div += '<div class="form-group">';
+  div += '<label class="col-sm-1 control-label">{{ON}}</label>';
+  div += '<div class="col-sm-3">';
+  div += '<div class="input-group">';
+  div += '<span class="input-group-btn">';
+  div += '<input type="checkbox" class="lightAttr" data-l1key="enable" checked />';
+  div += '<a class="btn btn-default bt_removeTrigger btn-sm roundedLeft"><i class="fa fa-minus-circle"></i></a>';
+  div += '</span>';
+  div += '<input class="lightAttr form-control input-sm" data-l1key="cmdOn" />';
+  div += '<span class="input-group-btn">';
+  div += '<a class="btn btn-sm listCmdAction btn-success roundedRight"><i class="fa fa-list-alt"></i></a>';
+  div += '</span>';
+  div += '</div>';
+  div += '</div>';
+  div += '</div>';
+  div += '<div class="form-group">';
+  div += '<label class="col-sm-1 control-label">{{OFF}}</label>';
+  div += '<div class="col-sm-3">';
+  div += '<div class="input-group">';
+  div += '<input class="lightAttr form-control input-sm" data-l1key="cmdOff" />';
+  div += '<span class="input-group-btn">';
+  div += '<a class="btn btn-sm listCmdAction btn-success roundedRight"><i class="fa fa-list-alt"></i></a>';
+  div += '</span>';
+  div += '</div>';
+  div += '</div>';
+  div += '</div>';
+  div += '<div class="form-group">';
+  div += '<label class="col-sm-1 control-label">{{Etat}}</label>';
+  div += '<div class="col-sm-3">';
+  div += '<div class="input-group">';
+  div += '<input class="lightAttr form-control input-sm" data-l1key="cmdState" />';
+  div += '<span class="input-group-btn">';
+  div += '<a class="btn btn-sm listCmdInfo btn-success roundedRight"><i class="fa fa-list-alt"></i></a>';
+  div += '</span>';
+  div += '</div>';
+  div += '</div>';
+  div += '</div>';
+  div += '</fieldset>';
+  div += '</form>';
+  div += '</div>';
+  $('#div_lights').append(div);
+  $('#div_lights').find('.light').last().setValues(_light, '.lightAttr');
+}
+
+
+function printEqLogic(_eqLogic) {
+  actionOptions = []
+  $('#div_lights').empty();
+  if (isset(_eqLogic.configuration)) {
+    if (isset(_eqLogic.configuration.lights)) {
+      for (var i in _eqLogic.configuration.lights) {
+        addLight(_eqLogic.configuration.lights[i]);
+      }
+    }
+  }
+  jeedom.cmd.displayActionsOption({
+    params : actionOptions,
+    async : false,
+    error: function (error) {
+      $('#div_alert').showAlert({message: error.message, level: 'danger'});
+    },
+    success : function(data){
+      for(var i in data){
+        $('#'+data[i].id).append(data[i].html.html);
+      }
+      taAutosize();
+    }
+  });
+}
+
+function saveEqLogic(_eqLogic) {
+  if (!isset(_eqLogic.configuration)) {
+    _eqLogic.configuration = {};
+  }
+  _eqLogic.configuration.lights = [];
+  $('#div_lights .light').each(function () {
+    var light = $(this).getValues('.lightAttr')[0];
+    _eqLogic.configuration.lights.push(light);
+  });
+  
+  return _eqLogic;
+}
