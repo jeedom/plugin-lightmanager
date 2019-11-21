@@ -39,6 +39,32 @@ $('#bt_addLuminosity').off('click').on('click', function () {
   addLuminosity({});
 });
 
+$("#div_mainContainer").off('click','.listCmdInfo').on('click','.listCmdInfo',  function () {
+  var el = $(this).closest('.input-group').find('input');
+  jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
+    el.value(result.human);
+  });
+});
+
+$("#div_mainContainer").off('click','.listCmdAction').on('click','.listCmdAction',  function () {
+  var el = $(this).closest('.input-group').find('input');
+  jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
+    el.value(result.human);
+    jeedom.cmd.displayActionOption(el.value(), '', function (html) {
+      el.closest('.form-group').find('.actionOptions').html(html);
+      taAutosize();
+    });
+  });
+});
+
+$('body').off('focusout','.lightAttr[data-l1key=cmdOn]').on('focusout','.lightAttr[data-l1key=cmdOn]',  function (event) {
+  var el = $(this).closest('.input-group').find('input');
+  var expression = $(this).closest('.form-group').getValues('.expressionAttr');
+  jeedom.cmd.displayActionOption($(this).value(), init(expression[0].options), function (html) {
+    el.closest('.form-group').find('.actionOptions').html(html);
+    taAutosize();
+  })
+});
 
 function addLight(_light) {
   if (!isset(_light)) {
@@ -49,7 +75,7 @@ function addLight(_light) {
   div += '<fieldset>';
   div += '<legend>{{Lumière}}</legend>';
   div += '<div class="form-group">';
-  div += '<label class="col-sm-1 control-label">{{ON}}</label>';
+  div += '<label class="col-sm-1 control-label">{{On}}</label>';
   div += '<div class="col-sm-3">';
   div += '<div class="input-group">';
   div += '<span class="input-group-btn">';
@@ -62,9 +88,11 @@ function addLight(_light) {
   div += '</span>';
   div += '</div>';
   div += '</div>';
+  var actionOption_id = uniqId();
+  div += '<div class="col-sm-5 actionOptions" id="'+actionOption_id+'"></div>';
   div += '</div>';
   div += '<div class="form-group">';
-  div += '<label class="col-sm-1 control-label">{{OFF}}</label>';
+  div += '<label class="col-sm-1 control-label">{{Off}}</label>';
   div += '<div class="col-sm-3">';
   div += '<div class="input-group">';
   div += '<input class="lightAttr form-control input-sm" data-l1key="cmdOff" />';
@@ -90,6 +118,11 @@ function addLight(_light) {
   div += '</div>';
   $('#div_lights').append(div);
   $('#div_lights').find('.light').last().setValues(_light, '.lightAttr');
+  actionOptions.push({
+    expression : init(_light.cmdOn, ''),
+    options : _light.options,
+    id : actionOption_id
+  });
 }
 
 
