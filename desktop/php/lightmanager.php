@@ -48,9 +48,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
 			<li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fas fa-tachometer-alt"></i> {{Général}}</a></li>
 			<li role="presentation"><a href="#lighttab" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-lightbulb"></i> {{Lumière}}</a></li>
-			<li role="presentation"><a href="#presencetab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-female"></i> {{Présence}}</a></li>
+			<li role="presentation"><a href="#motiontab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-female"></i> {{Mouvement}}</a></li>
 			<li role="presentation"><a href="#luminositytab" aria-controls="profile" role="tab" data-toggle="tab"><i class="far fa-sun"></i> {{Luminosité}}</a></li>
 			<li role="presentation"><a href="#timmertab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fas fa-hourglass-start"></i> {{Temporisation}}</a></li>
+			<li role="presentation"><a href="#commandtab" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-list-alt"></i> {{Commandes}}</a></li>
 		</ul>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab">
@@ -101,21 +102,61 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			</div>
 			<div role="tabpanel" class="tab-pane" id="lighttab">
 				<a class="btn btn-success btn-xs pull-right" id="bt_addLight"><i class="fas fa-plus-circle"></i> {{Ajouter lumieres}}</a>
+				<br/><br/>
 				<div id="div_lights"></div>
 			</div>
-			<div role="tabpanel" class="tab-pane" id="presencetab">
-				<a class="btn btn-success btn-xs pull-right" id="bt_addPresence"><i class="fas fa-plus-circle"></i> {{Ajouter présence}}</a>
-				<div id="div_presences"></div>
-				
+			<div role="tabpanel" class="tab-pane" id="motiontab">
+				<a class="btn btn-success btn-xs pull-right" id="bt_addMotion"><i class="fas fa-plus-circle"></i> {{Ajouter présence}}</a>
+				<br/><br/>
+				<div id="div_motions"></div>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="luminositytab">
 				<a class="btn btn-success btn-xs pull-right" id="bt_addLuminosity"><i class="fas fa-plus-circle"></i> {{Ajouter luminosité}}</a>
+				<br/><br/>
 				<div id="div_luminositys"></div>
-				
 			</div>
 			<div role="tabpanel" class="tab-pane" id="timmertab">
-				
-				
+				<br/>
+				<form class="form-horizontal">
+					<fieldset>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{Délai d'extinction après absence (min)}}</label>
+							<div class="col-sm-3">
+								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="delay::off_no_motion" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{Temps maximum allumé (min)}}</label>
+							<div class="col-sm-3">
+								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="delay::max_on" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{Débrayage automatique}}</label>
+							<div class="col-sm-3">
+								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="auto_walkout" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{Reprendre la main après (min)}}</label>
+							<div class="col-sm-3">
+								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="delay::regain_control" />
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<div role="tabpanel" class="tab-pane" id="commandtab">
+				<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/><br/>
+				<table id="table_cmd" class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th>{{Nom}}</th><th>{{Options}}</th><th>{{Action}}</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

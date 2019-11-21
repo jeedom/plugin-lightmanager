@@ -23,87 +23,155 @@ class lightmanager extends eqLogic {
   /*     * *************************Attributs****************************** */
   
   
-  
   /*     * ***********************Methode static*************************** */
   
-  /*
-  * Fonction exécutée automatiquement toutes les minutes par Jeedom
-  public static function cron() {
+  public static function mainLightChange($_options){
+    
+  }
   
-}
-*/
-
-
-/*
-* Fonction exécutée automatiquement toutes les heures par Jeedom
-public static function cronHourly() {
-
-}
-*/
-
-/*
-* Fonction exécutée automatiquement tous les jours par Jeedom
-public static function cronDaily() {
-
-}
-*/
-
-
-
-/*     * *********************Méthodes d'instance************************* */
-
-public function preInsert() {
+  public static function mainMotionChange($_options){
+    
+  }
   
-}
-
-public function postInsert() {
+  public static function mainLuminosityChange($_options){
+    
+  }
   
-}
-
-public function preSave() {
   
-}
-
-public function postSave() {
+  /*     * *********************Méthodes d'instance************************* */
   
-}
-
-public function preUpdate() {
   
-}
-
-public function postUpdate() {
+  public function postSave() {
+    $cmd = $this->getCmd(null, 'stateHandling');
+    if (!is_object($cmd)) {
+      $cmd = new lightmanagerCmd();
+      $cmd->setLogicalId('stateHandling');
+      $cmd->setName(__('Etat gestion', __FILE__));
+    }
+    $cmd->setType('info');
+    $cmd->setSubType('binary');
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->save();
+    
+    $cmd = $this->getCmd(null, 'suspendHandling');
+    if (!is_object($cmd)) {
+      $cmd = new lightmanagerCmd();
+      $cmd->setLogicalId('suspendHandling');
+      $cmd->setName(__('Suspendre', __FILE__));
+    }
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->save();
+    
+    $cmd = $this->getCmd(null, 'resumeHandling');
+    if (!is_object($cmd)) {
+      $cmd = new lightmanagerCmd();
+      $cmd->setLogicalId('resumeHandling');
+      $cmd->setName(__('Reprendre', __FILE__));
+    }
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->save();
+    
+    $cmd = $this->getCmd(null, 'refresh');
+    if (!is_object($cmd)) {
+      $cmd = new lightmanagerCmd();
+      $cmd->setLogicalId('refresh');
+      $cmd->setName(__('Rafraichir', __FILE__));
+    }
+    $cmd->setType('action');
+    $cmd->setSubType('other');
+    $cmd->setEqLogic_id($this->getId());
+    $cmd->save();
+    
+    $lights = $this->getConfiguration('lights','');
+    if($lights != '' ){
+      $listener = listener::byClassAndFunction('lightmanager', 'mainLightChange', array('lightmanager_id' => intval($this->getId())));
+      if (!is_object($listener)) {
+        $listener = new listener();
+      }
+      $listener->setClass('lightmanager');
+      $listener->setFunction('mainLightChange');
+      $listener->setOption(array('lightmanager_id' => intval($this->getId())));
+      $listener->emptyEvent();
+      $nblistener = 0;
+      foreach ($lights as $light) {
+        preg_match_all("/#([0-9]*)#/", $light['cmdOn'], $matches);
+        foreach ($matches[1] as $cmd_id) {
+          $nblistener += 1;
+          $listener->addEvent($cmd_id);
+        }
+      }
+      if ($nblistener > 0) {
+        $listener->save();
+      }
+    }else {
+      $listener = listener::byClassAndFunction('lightmanager', 'mainLightChange', array('lightmanager_id' => intval($this->getId())));
+      if (is_object($listener)) {
+        $listener->remove();
+      }
+    }
+    
+    $motions = $this->getConfiguration('motions','');
+    if($motions != '' ){
+      $listener = listener::byClassAndFunction('lightmanager', 'mainMotionChange', array('lightmanager_id' => intval($this->getId())));
+      if (!is_object($listener)) {
+        $listener = new listener();
+      }
+      $listener->setClass('lightmanager');
+      $listener->setFunction('mainMotionChange');
+      $listener->setOption(array('lightmanager_id' => intval($this->getId())));
+      $listener->emptyEvent();
+      $nblistener = 0;
+      foreach ($motions as $motion) {
+        preg_match_all("/#([0-9]*)#/", $motion['cmdMotion'], $matches);
+        foreach ($matches[1] as $cmd_id) {
+          $nblistener += 1;
+          $listener->addEvent($cmd_id);
+        }
+      }
+      if ($nblistener > 0) {
+        $listener->save();
+      }
+    }else {
+      $listener = listener::byClassAndFunction('lightmanager', 'mainMotionChange', array('lightmanager_id' => intval($this->getId())));
+      if (is_object($listener)) {
+        $listener->remove();
+      }
+    }
+    
+    $luminositys = $this->getConfiguration('luminositys','');
+    if($luminositys != '' ){
+      $listener = listener::byClassAndFunction('lightmanager', 'mainLuminosityChange', array('lightmanager_id' => intval($this->getId())));
+      if (!is_object($listener)) {
+        $listener = new listener();
+      }
+      $listener->setClass('lightmanager');
+      $listener->setFunction('mainLuminosityChange');
+      $listener->setOption(array('lightmanager_id' => intval($this->getId())));
+      $listener->emptyEvent();
+      $nblistener = 0;
+      foreach ($luminositys as $luminosity) {
+        preg_match_all("/#([0-9]*)#/", $luminosity['cmdLuminosity'], $matches);
+        foreach ($matches[1] as $cmd_id) {
+          $nblistener += 1;
+          $listener->addEvent($cmd_id);
+        }
+      }
+      if ($nblistener > 0) {
+        $listener->save();
+      }
+    }else {
+      $listener = listener::byClassAndFunction('lightmanager', 'mainLuminosityChange', array('lightmanager_id' => intval($this->getId())));
+      if (is_object($listener)) {
+        $listener->remove();
+      }
+    }
+  }
   
-}
-
-public function preRemove() {
-  
-}
-
-public function postRemove() {
-  
-}
-
-/*
-* Non obligatoire mais permet de modifier l'affichage du widget si vous en avez besoin
-public function toHtml($_version = 'dashboard') {
-
-}
-*/
-
-/*
-* Non obligatoire mais ca permet de déclencher une action après modification de variable de configuration
-public static function postConfig_<Variable>() {
-}
-*/
-
-/*
-* Non obligatoire mais ca permet de déclencher une action avant modification de variable de configuration
-public static function preConfig_<Variable>() {
-}
-*/
-
-/*     * **********************Getteur Setteur*************************** */
+  /*     * **********************Getteur Setteur*************************** */
 }
 
 class lightmanagerCmd extends cmd {
@@ -115,16 +183,9 @@ class lightmanagerCmd extends cmd {
   
   /*     * *********************Methode d'instance************************* */
   
-  /*
-  * Non obligatoire permet de demander de ne pas supprimer les commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-  public function dontRemoveCmd() {
-  return true;
-}
-*/
-
-public function execute($_options = array()) {
+  public function execute($_options = array()) {
+    
+  }
   
-}
-
-/*     * **********************Getteur Setteur*************************** */
+  /*     * **********************Getteur Setteur*************************** */
 }
