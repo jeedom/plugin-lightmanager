@@ -122,25 +122,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{Délai d'extinction après absence (min)}}</label>
 							<div class="col-sm-3">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="delay::off_no_motion" />
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">{{Temps maximum allumé (min)}}</label>
-							<div class="col-sm-3">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="delay::max_on" />
+								<input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay::off_no_motion" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{Débrayage automatique}}</label>
 							<div class="col-sm-3">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="auto_walkout" />
+								<input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="auto_walkout" />
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{Reprendre la main après (min)}}</label>
 							<div class="col-sm-3">
-								<input type="text" class="eqLogicAttr form-control" data-l1key="configration" data-l2key="delay::regain_control" />
+								<input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay::regain_control" />
 							</div>
 						</div>
 					</fieldset>

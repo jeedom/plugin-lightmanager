@@ -26,37 +26,7 @@ class lightmanager extends eqLogic {
   /*     * ***********************Methode static*************************** */
   
   public static function mainLightChange($_options){
-    $lightmanager = self::byId($_options['lightmanager_id']);
-    if(!is_object($lightmanager)){
-      return;
-    }
-    $stateHandling = $lightmanager->getCmd(null, 'stateHandling');
-    if($stateHandling->execCmd() == 0){
-      return;
-    }
-    $lightState = $lightmanager->getLightState();
-    if($lightState != $lightmanager->getCache('lastLightOrder',$lightState) && $lightmanager->getConfiguration('auto_walkout') == 1){
-      $stateHandling->event(0);
-      return;
-    }
-    if($lightState){
-      $crons = cron::searchClassAndFunction('lightmanager', 'autoLightOff', '"lightmanager_id":"' . $lightmanager->getId());
-      if (is_array($crons)) {
-        foreach ($crons as $cron) {
-          if ($cron->getState() != 'run') {
-            $cron->remove();
-          }
-        }
-      }
-      $cron = new cron();
-      $cron->setClass('lightmanager');
-      $cron->setFunction('autoLightOff');
-      $cron->setOption(array('lightmanager_id' => intval($lightmanager->getId())));
-      $cron->setLastRun(date('Y-m-d H:i:s'));
-      $cron->setOnce(1);
-      $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $lightmanager->getConfiguration('delay::max_on')));
-      $cron->save();
-    }
+    
   }
   
   public static function mainMotionChange($_options){
@@ -64,6 +34,10 @@ class lightmanager extends eqLogic {
     if(!is_object($lightmanager)){
       return;
     }
+    if(isset($_options['seconds']) && $_options['seconds'] > 0){
+      sleep($_options['seconds']);
+    }
+    log::add('lightmanager','debug',$lightmanager->getHumanName().' mainMotionChange => '.json_encode($_options));
     $lightmanager->handleStateLight();
   }
   
@@ -72,8 +46,13 @@ class lightmanager extends eqLogic {
     if(!is_object($lightmanager)){
       return;
     }
+    if(isset($_options['seconds']) && $_options['seconds'] > 0){
+      sleep($_options['seconds']);
+    }
+    log::add('lightmanager','debug',$lightmanager->getHumanName().' autoMotionLightOff => '.json_encode($_options));
     $stateHandling = $lightmanager->getCmd(null, 'stateHandling');
     if($stateHandling->execCmd() == 0){
+      log::add('lightmanager','debug',$lightmanager->getHumanName().' handling disable, do nothing');
       return;
     }
     $lightmanager->lightOff();
@@ -84,8 +63,17 @@ class lightmanager extends eqLogic {
     if(!is_object($lightmanager)){
       return;
     }
+    if(isset($_options['seconds']) && $_options['seconds'] > 0){
+      sleep($_options['seconds']);
+    }
+    log::add('lightmanager','debug',$lightmanager->getHumanName().' autoLightOff => '.json_encode($_options));
     $stateHandling = $lightmanager->getCmd(null, 'stateHandling');
     if($stateHandling->execCmd() == 0){
+      log::add('lightmanager','debug',$lightmanager->getHumanName().' handling disable, do nothing');
+      return;
+    }
+    if($lightmanager->getMotionState()){
+      log::add('lightmanager','debug',$lightmanager->getHumanName().' motion in progess do nothing');
       return;
     }
     $lightmanager->lightOff();
@@ -96,6 +84,10 @@ class lightmanager extends eqLogic {
     if(!is_object($lightmanager)){
       return;
     }
+    if(isset($_options['seconds']) && $_options['seconds'] > 0){
+      sleep($_options['seconds']);
+    }
+    log::add('lightmanager','debug',$lightmanager->getHumanName().' mainLuminosityChange => '.json_encode($_options));
   }
   
   public static function mainHandleChange($_options){
@@ -103,6 +95,10 @@ class lightmanager extends eqLogic {
     if(!is_object($lightmanager)){
       return;
     }
+    if(isset($_options['seconds']) && $_options['seconds'] > 0){
+      sleep($_options['seconds']);
+    }
+    log::add('lightmanager','debug',$lightmanager->getHumanName().' mainHandleChange => '.json_encode($_options));
     $crons = cron::searchClassAndFunction('lightmanager', 'autoLightOff', '"lightmanager_id":"' . $lightmanager->getId());
     if (is_array($crons)) {
       foreach ($crons as $cron) {
@@ -113,10 +109,11 @@ class lightmanager extends eqLogic {
     }
     $stateHandling = $lightmanager->getCmd(null, 'stateHandling');
     if($stateHandling->execCmd() == 0 && $lightmanager->getConfiguration('delay::regain_control') > 0){
+      log::add('lightmanager','debug',$lightmanager->getHumanName().' plan resume handling');
       $cron = new cron();
       $cron->setClass('lightmanager');
       $cron->setFunction('resumeHandling');
-      $cron->setOption(array('lightmanager_id' => intval($lightmanager->getId())));
+      $cron->setOption(array('lightmanager_id' => intval($lightmanager->getId()),'seconds' => date('s')));
       $cron->setLastRun(date('Y-m-d H:i:s'));
       $cron->setOnce(1);
       $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $lightmanager->getConfiguration('delay::regain_control')));
@@ -129,30 +126,31 @@ class lightmanager extends eqLogic {
     if(!is_object($lightmanager)){
       return;
     }
-    $lightmanager->handleStateLight();
+    if(isset($_options['seconds']) && $_options['seconds'] > 0){
+      sleep($_options['seconds']);
+    }
+    log::add('lightmanager','debug',$lightmanager->getHumanName().' resumeHandling => '.json_encode($_options));
+    $lightmanager->getCmd(null, 'resumeHandling')->execCmd();
   }
   
   
   /*     * *********************Méthodes d'instance************************* */
   
   public function handleStateLight(){
+    log::add('lightmanager','debug',$this->getHumanName().' handleStateLight');
     $stateHandling = $this->getCmd(null, 'stateHandling');
     if($stateHandling->execCmd() == 0){
+      log::add('lightmanager','debug',$this->getHumanName().' Handling disable, do nothing');
       return;
     }
     $lightState = $this->getLightState();
     if($lightState != $this->getCache('lastLightOrder',$lightState) && $this->getConfiguration('auto_walkout') == 1){
+      log::add('lightmanager','debug',$this->getHumanName().' Light state no same that last order, do nothing');
       $stateHandling->event(0);
       return;
     }
-    if($stateHandling->execCmd() == 0){
-      return;
-    }
     $motionState = $this->getMotionState();
-    if($motionState == $this->getCache('lastMotionOrder',$motionState)){
-      return;
-    }
-    $this->setCache('lastMotionOrder',$motionState)
+    $this->setCache('lastMotionOrder',$motionState);
     $crons = cron::searchClassAndFunction('lightmanager', 'autoMotionLightOff', '"lightmanager_id":"' . $this->getId());
     if (is_array($crons)) {
       foreach ($crons as $cron) {
@@ -163,18 +161,22 @@ class lightmanager extends eqLogic {
     }
     $luminosityState = $this->getLuminosityState();
     if($motionState){
+      log::add('lightmanager','debug',$this->getHumanName().' Motion detected, check luminosity');
       if(!$luminosityState){
+        log::add('lightmanager','debug',$this->getHumanName().' Luminosity not ok, do nothing');
         return;
       }
       $this->lightOn();
     }else{
+      log::add('lightmanager','debug',$this->getHumanName().' No motion check off light');
       if($this->getConfiguration('delay::off_no_motion') <= 0){
         $this->lightOff();
       }else{
+        log::add('lightmanager','debug',$this->getHumanName().' Plan off light');
         $cron = new cron();
         $cron->setClass('lightmanager');
         $cron->setFunction('autoMotionLightOff');
-        $cron->setOption(array('lightmanager_id' => intval($this->getId())));
+        $cron->setOption(array('lightmanager_id' => intval($this->getId()),'seconds' => date('s')));
         $cron->setLastRun(date('Y-m-d H:i:s'));
         $cron->setOnce(1);
         $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $this->getConfiguration('delay::off_no_motion')));
@@ -184,13 +186,17 @@ class lightmanager extends eqLogic {
   }
   
   public function lightOn(){
+    log::add('lightmanager','debug',$this->getHumanName().' Turn on light');
     $lights = $this->getConfiguration('lights','');
     if($lights != '' ){
-      foreach ($lights as $light) {
+      foreach ($lights as &$light) {
         try {
-          $cmd = cmd::byId($light['cmdOn']);
+          $cmd = cmd::byId(str_replace('#','',$light['cmdOn']));
           if(!is_object($cmd)){
             continue;
+          }
+          if(isset($light['options'])){
+            $light['options'] = array();
           }
           $cmd->execCmd($light['options']);
         } catch (\Exception $e) {
@@ -198,15 +204,16 @@ class lightmanager extends eqLogic {
         }
       }
     }
-    $lightmanager->setCache('lastLightOrder',1);
+    $this->setCache('lastLightOrder',1);
   }
   
   public function lightOff(){
+    log::add('lightmanager','debug',$this->getHumanName().' Turn off light');
     $lights = $this->getConfiguration('lights','');
     if($lights != '' ){
       foreach ($lights as $light) {
         try {
-          $cmd = cmd::byId($light['cmdOff']);
+          $cmd = cmd::byId(str_replace('#','',$light['cmdOff']));
           if(!is_object($cmd)){
             continue;
           }
@@ -216,7 +223,7 @@ class lightmanager extends eqLogic {
         }
       }
     }
-    $lightmanager->setCache('lastLightOrder',0);
+    $this->setCache('lastLightOrder',0);
   }
   
   public function getMotionState(){
@@ -224,10 +231,12 @@ class lightmanager extends eqLogic {
     if($motions != '' ){
       foreach ($motions as $motion) {
         if(cmd::cmdToValue($motion['cmdMotion']) == 1){
+          log::add('lightmanager','debug',$this->getHumanName().' Motion check => 1');
           return true;
         }
       }
     }
+    log::add('lightmanager','debug',$this->getHumanName().' Motion check => 0');
     return false;
   }
   
@@ -236,10 +245,12 @@ class lightmanager extends eqLogic {
     if($luminositys != '' ){
       foreach ($luminositys as $luminosity) {
         if(cmd::cmdToValue($luminosity['cmdLuminosity']) < $luminosity['threshold']){
+          log::add('lightmanager','debug',$this->getHumanName().' Luminosity check => 1');
           return true;
         }
       }
     }
+    log::add('lightmanager','debug',$this->getHumanName().' Luminosity check => 0');
     return false;
   }
   
@@ -248,10 +259,12 @@ class lightmanager extends eqLogic {
     if($lights != '' ){
       foreach ($lights as $light) {
         if(cmd::cmdToValue($light['cmdState'])){
+          log::add('lightmanager','debug',$this->getHumanName().' Light state check => 1');
           return true;
         }
       }
     }
+    log::add('lightmanager','debug',$this->getHumanName().' Light state check => 0');
     return false;
   }
   
@@ -406,6 +419,17 @@ class lightmanager extends eqLogic {
         $listener->remove();
       }
     }
+    
+    $listener = listener::byClassAndFunction('lightmanager', 'mainHandleChange', array('lightmanager_id' => intval($this->getId())));
+    if (!is_object($listener)) {
+      $listener = new listener();
+    }
+    $listener->setClass('lightmanager');
+    $listener->setFunction('mainHandleChange');
+    $listener->setOption(array('lightmanager_id' => intval($this->getId())));
+    $listener->emptyEvent();
+    $listener->addEvent($this->getCmd(null, 'stateHandling')->getId());
+    $listener->save();
   }
   
   /*     * **********************Getteur Setteur*************************** */
@@ -428,6 +452,8 @@ class lightmanagerCmd extends cmd {
       $lightmanager->lightOff();
     }else if($this->getLogicalId() == 'resumeHandling'){
       $lightmanager->getCmd(null, 'stateHandling')->event(1);
+      $lightmanager->setCache('lastLightOrder',$lightmanager->getLightState());
+      $lightmanager->handleStateLight();
     }else if($this->getLogicalId() == 'suspendHandling'){
       $lightmanager->getCmd(null, 'stateHandling')->event(0);
     }

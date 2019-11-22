@@ -227,6 +227,8 @@ function addLuminosity(_luminosity) {
 function printEqLogic(_eqLogic) {
   actionOptions = []
   $('#div_lights').empty();
+  $('#div_luminositys').empty();
+  $('#div_motions').empty();
   if (isset(_eqLogic.configuration)) {
     if (isset(_eqLogic.configuration.lights)) {
       for (var i in _eqLogic.configuration.lights) {
