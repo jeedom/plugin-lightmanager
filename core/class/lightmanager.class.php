@@ -25,10 +25,6 @@ class lightmanager extends eqLogic {
   
   /*     * ***********************Methode static*************************** */
   
-  public static function mainLightChange($_options){
-    
-  }
-  
   public static function mainMotionChange($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
     if(!is_object($lightmanager)){
@@ -79,17 +75,6 @@ class lightmanager extends eqLogic {
     $lightmanager->lightOff();
   }
   
-  public static function mainLuminosityChange($_options){
-    $lightmanager = self::byId($_options['lightmanager_id']);
-    if(!is_object($lightmanager)){
-      return;
-    }
-    if(isset($_options['seconds']) && $_options['seconds'] > 0){
-      sleep($_options['seconds']);
-    }
-    log::add('lightmanager','debug',$lightmanager->getHumanName().' mainLuminosityChange => '.json_encode($_options));
-  }
-  
   public static function mainHandleChange($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
     if(!is_object($lightmanager)){
@@ -121,7 +106,7 @@ class lightmanager extends eqLogic {
     }
   }
   
-  public function resumeHandling($_options){
+  public static function resumeHandling($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
     if(!is_object($lightmanager)){
       return;
@@ -133,6 +118,13 @@ class lightmanager extends eqLogic {
     $lightmanager->getCmd(null, 'resumeHandling')->execCmd();
   }
   
+  public static function cronDaily(){
+    foreach (self::byType('lightmanager') as $lightmanager) {
+      if($lightmanager->getConfiguration('delay::regain_control') > 0){
+        $lightmanager->getCmd(null, 'resumeHandling')->execCmd();
+      }
+    }
+  }
   
   /*     * *********************Méthodes d'instance************************* */
   
@@ -336,34 +328,6 @@ class lightmanager extends eqLogic {
     $cmd->setEqLogic_id($this->getId());
     $cmd->save();
     
-    $lights = $this->getConfiguration('lights','');
-    if($lights != '' ){
-      $listener = listener::byClassAndFunction('lightmanager', 'mainLightChange', array('lightmanager_id' => intval($this->getId())));
-      if (!is_object($listener)) {
-        $listener = new listener();
-      }
-      $listener->setClass('lightmanager');
-      $listener->setFunction('mainLightChange');
-      $listener->setOption(array('lightmanager_id' => intval($this->getId())));
-      $listener->emptyEvent();
-      $nblistener = 0;
-      foreach ($lights as $light) {
-        preg_match_all("/#([0-9]*)#/", $light['cmdState'], $matches);
-        foreach ($matches[1] as $cmd_id) {
-          $nblistener += 1;
-          $listener->addEvent($cmd_id);
-        }
-      }
-      if ($nblistener > 0) {
-        $listener->save();
-      }
-    }else {
-      $listener = listener::byClassAndFunction('lightmanager', 'mainLightChange', array('lightmanager_id' => intval($this->getId())));
-      if (is_object($listener)) {
-        $listener->remove();
-      }
-    }
-    
     $motions = $this->getConfiguration('motions','');
     if($motions != '' ){
       $listener = listener::byClassAndFunction('lightmanager', 'mainMotionChange', array('lightmanager_id' => intval($this->getId())));
@@ -392,34 +356,6 @@ class lightmanager extends eqLogic {
       }
     }
     
-    $luminositys = $this->getConfiguration('luminositys','');
-    if($luminositys != '' ){
-      $listener = listener::byClassAndFunction('lightmanager', 'mainLuminosityChange', array('lightmanager_id' => intval($this->getId())));
-      if (!is_object($listener)) {
-        $listener = new listener();
-      }
-      $listener->setClass('lightmanager');
-      $listener->setFunction('mainLuminosityChange');
-      $listener->setOption(array('lightmanager_id' => intval($this->getId())));
-      $listener->emptyEvent();
-      $nblistener = 0;
-      foreach ($luminositys as $luminosity) {
-        preg_match_all("/#([0-9]*)#/", $luminosity['cmdLuminosity'], $matches);
-        foreach ($matches[1] as $cmd_id) {
-          $nblistener += 1;
-          $listener->addEvent($cmd_id);
-        }
-      }
-      if ($nblistener > 0) {
-        $listener->save();
-      }
-    }else {
-      $listener = listener::byClassAndFunction('lightmanager', 'mainLuminosityChange', array('lightmanager_id' => intval($this->getId())));
-      if (is_object($listener)) {
-        $listener->remove();
-      }
-    }
-    
     $listener = listener::byClassAndFunction('lightmanager', 'mainHandleChange', array('lightmanager_id' => intval($this->getId())));
     if (!is_object($listener)) {
       $listener = new listener();
@@ -430,6 +366,16 @@ class lightmanager extends eqLogic {
     $listener->emptyEvent();
     $listener->addEvent($this->getCmd(null, 'stateHandling')->getId());
     $listener->save();
+  }
+  public function preRemove(){
+    $listener = listener::byClassAndFunction('lightmanager', 'mainMotionChange', array('lightmanager_id' => intval($this->getId())));
+    if (is_object($listener)) {
+      $listener->remove();
+    }
+    $listener = listener::byClassAndFunction('lightmanager', 'mainHandleChange', array('lightmanager_id' => intval($this->getId())));
+    if (is_object($listener)) {
+      $listener->remove();
+    }
   }
   
   /*     * **********************Getteur Setteur*************************** */
