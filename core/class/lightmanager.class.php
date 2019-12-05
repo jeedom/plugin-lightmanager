@@ -55,6 +55,10 @@ class lightmanager extends eqLogic {
       log::add('lightmanager','debug',$lightmanager->getHumanName().' handling disable, do nothing');
       return;
     }
+    if($lightmanager->getMotionState()){
+      log::add('lightmanager','debug',$lightmanager->getHumanName().' motion in progess do nothing');
+      return;
+    }
     $lightmanager->lightOff();
   }
   
@@ -72,8 +76,17 @@ class lightmanager extends eqLogic {
       log::add('lightmanager','debug',$lightmanager->getHumanName().' handling disable, do nothing');
       return;
     }
-    if($lightmanager->getMotionState()){
+    if($lightmanager->getMotionState() && $lightmanager->getConfiguration('delay::off_no_motion') > 0){
       log::add('lightmanager','debug',$lightmanager->getHumanName().' motion in progess do nothing');
+      log::add('lightmanager','debug',$lightmanager->getHumanName().' Plan off light');
+      $cron = new cron();
+      $cron->setClass('lightmanager');
+      $cron->setFunction('autoMotionLightOff');
+      $cron->setOption(array('lightmanager_id' => intval($lightmanager->getId()),'seconds' => date('s')));
+      $cron->setLastRun(date('Y-m-d H:i:s'));
+      $cron->setOnce(1);
+      $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $lightmanager->getConfiguration('delay::off_no_motion')));
+      $cron->save();
       return;
     }
     $lightmanager->lightOff();
