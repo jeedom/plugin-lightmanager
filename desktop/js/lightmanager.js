@@ -214,7 +214,6 @@ function addLuminosity(_luminosity) {
   div += '</span>';
   div += '</div>';
   div += '</div>';
-  div += '</div>';
   div += '<label class="col-sm-1 control-label">{{Seuil}}</label>';
   div += '<div class="col-sm-1 has-success">';
   div += '<input class="luminosityAttr form-control input-sm" data-l1key="threshold" value="0" />';

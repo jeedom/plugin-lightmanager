@@ -108,12 +108,20 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<div role="tabpanel" class="tab-pane" id="motiontab">
 				<a class="btn btn-success btn-xs pull-right" id="bt_addMotion"><i class="fas fa-plus-circle"></i> {{Ajouter présence}}</a>
 				<br/><br/>
-				<div id="div_motions"></div>
+				<form class="form-horizontal">
+					<fieldset>
+						<div id="div_motions"></div>
+					</fieldset>
+				</form>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="luminositytab">
 				<a class="btn btn-success btn-xs pull-right" id="bt_addLuminosity"><i class="fas fa-plus-circle"></i> {{Ajouter luminosité}}</a>
 				<br/><br/>
-				<div id="div_luminositys"></div>
+				<form class="form-horizontal">
+					<fieldset>
+						<div id="div_luminositys"></div>
+					</fieldset>
+				</form>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="timmertab">
 				<br/>
