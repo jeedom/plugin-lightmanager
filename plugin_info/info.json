@@ -1,6 +1,6 @@
 {
 	"id" : "lightmanager",
-	"name" : "Light manager",
+	"name" : "Gestion Lumières",
 	"description" : "Plugin permettant la gestion des lumières",
 	"licence" : "AGPL",
 	"author" : "Jeedom SAS",
