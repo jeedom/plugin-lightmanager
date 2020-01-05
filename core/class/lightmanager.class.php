@@ -200,7 +200,7 @@ class lightmanager extends eqLogic {
           if(!is_object($cmd)){
             continue;
           }
-          if(isset($light['options'])){
+          if(!isset($light['options'])){
             $light['options'] = array();
           }
           $cmd->execCmd($light['options']);
@@ -222,7 +222,10 @@ class lightmanager extends eqLogic {
           if(!is_object($cmd)){
             continue;
           }
-          $cmd->execCmd();
+          if(!isset($light['options'])){
+            $light['options'] = array();
+          }
+          $cmd->execCmd($light['options']);
         } catch (\Exception $e) {
           
         }
