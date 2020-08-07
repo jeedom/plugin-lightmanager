@@ -27,7 +27,7 @@ class lightmanager extends eqLogic {
   
   public static function mainMotionChange($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
-    if(!is_object($lightmanager)){
+    if(!is_object($lightmanager) || !$this->getIsEnable()){
       return;
     }
     if(isset($_options['seconds']) && $_options['seconds'] > 0){
@@ -39,7 +39,7 @@ class lightmanager extends eqLogic {
   
   public static function autoMotionLightOff($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
-    if(!is_object($lightmanager)){
+    if(!is_object($lightmanager) || !$this->getIsEnable()){
       return;
     }
     if(isset($_options['seconds']) && $_options['seconds'] > 0){
@@ -60,7 +60,7 @@ class lightmanager extends eqLogic {
   
   public static function autoLightOff($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
-    if(!is_object($lightmanager)){
+    if(!is_object($lightmanager) || !$this->getIsEnable()){
       return;
     }
     if(isset($_options['seconds']) && $_options['seconds'] > 0){
@@ -90,7 +90,7 @@ class lightmanager extends eqLogic {
   
   public static function mainHandleChange($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
-    if(!is_object($lightmanager)){
+    if(!is_object($lightmanager) || !$this->getIsEnable()){
       return;
     }
     if(isset($_options['seconds']) && $_options['seconds'] > 0){
@@ -121,7 +121,7 @@ class lightmanager extends eqLogic {
   
   public static function resumeHandling($_options){
     $lightmanager = self::byId($_options['lightmanager_id']);
-    if(!is_object($lightmanager)){
+    if(!is_object($lightmanager) || !$this->getIsEnable()){
       return;
     }
     if(isset($_options['seconds']) && $_options['seconds'] > 0){
