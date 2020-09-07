@@ -180,7 +180,7 @@ function addMotion(_motion) {
   div += '<div class="col-sm-3">';
   div += '<div class="input-group">';
   div += '<span class="input-group-btn">';
-  div += '<input type="checkbox" class="lightAttr" data-l1key="enable" checked />';
+  div += '<input type="checkbox" class="motionAttr" data-l1key="enable" checked />';
   div += '<a class="btn btn-default bt_removeMotion btn-sm roundedLeft"><i class="fa fa-minus-circle"></i></a>';
   div += '</span>';
   div += '<input class="motionAttr form-control input-sm" data-l1key="cmdMotion" />';
