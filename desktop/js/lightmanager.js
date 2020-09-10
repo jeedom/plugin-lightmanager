@@ -205,7 +205,7 @@ function addLuminosity(_luminosity) {
   div += '<div class="col-sm-3">';
   div += '<div class="input-group">';
   div += '<span class="input-group-btn">';
-  div += '<input type="checkbox" class="lightAttr" data-l1key="enable" checked />';
+  div += '<input type="checkbox" class="luminosityAttr" data-l1key="enable" checked />';
   div += '<a class="btn btn-default bt_removeLuminosity btn-sm roundedLeft"><i class="fa fa-minus-circle"></i></a>';
   div += '</span>';
   div += '<input class="luminosityAttr form-control input-sm" data-l1key="cmdLuminosity" />';
