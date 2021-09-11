@@ -177,7 +177,11 @@ class lightmanager extends eqLogic {
       if ($this->getConfiguration('delay::off_no_motion') <= 0) {
         $this->lightOff();
       } else {
-        log::add('lightmanager', 'debug', $this->getHumanName() . ' Plan off light');
+        if (!$lightState) {
+          log::add('lightmanager', 'debug', $this->getHumanName() . ' Light is off nothing to do');
+          return;
+        }
+        log::add('lightmanager', 'debug', $this->getHumanName() . ' Light is on plan off light');
         $cron = new cron();
         $cron->setClass('lightmanager');
         $cron->setFunction('autoMotionLightOff');
