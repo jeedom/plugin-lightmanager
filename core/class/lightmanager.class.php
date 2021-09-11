@@ -164,9 +164,9 @@ class lightmanager extends eqLogic {
         }
       }
     }
-    $luminosityState = $this->getLuminosityState();
     if ($motionState) {
       log::add('lightmanager', 'debug', $this->getHumanName() . ' Motion detected, check luminosity');
+      $luminosityState = $this->getLuminosityState();
       if (!$luminosityState) {
         log::add('lightmanager', 'debug', $this->getHumanName() . ' Luminosity not ok, do nothing');
         return;
@@ -239,7 +239,8 @@ class lightmanager extends eqLogic {
         if ($motion['enable'] != 1) {
           continue;
         }
-        $value = evaluate($motion['cmdMotion']);
+        $value = jeedom::evaluateExpression($motion['cmdMotion']);
+        log::add('lightmanager', 'debug', $this->getHumanName() . ' ' . $motion['cmdMotion'] . ' result : ' . $value);
         if ($value == 1) {
           log::add('lightmanager', 'debug', $this->getHumanName() . ' Motion check => 1');
           return true;
@@ -391,6 +392,7 @@ class lightmanager extends eqLogic {
     $listener->addEvent($this->getCmd(null, 'stateHandling')->getId());
     $listener->save();
   }
+
   public function preRemove() {
     $listener = listener::byClassAndFunction('lightmanager', 'mainMotionChange', array('lightmanager_id' => intval($this->getId())));
     if (is_object($listener)) {
