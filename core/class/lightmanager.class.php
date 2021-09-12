@@ -262,7 +262,18 @@ class lightmanager extends eqLogic {
         if ($luminosity['enable'] != 1) {
           continue;
         }
-        if (cmd::cmdToValue($luminosity['cmdLuminosity']) < $luminosity['threshold']) {
+        if (!isset($luminosity['min_last_min']) || $luminosity['min_last_min'] == 0) {
+          $value = cmd::cmdToValue($luminosity['cmdLuminosity']);
+        } else {
+          $cmd = cmd::byId(str_replace('#', '', $luminosity['cmdLuminosity']));
+          if (!is_object($cmd)) {
+            continue;
+          }
+          $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
+          $value = $stats['min'];
+        }
+        log::add('lightmanager', 'debug', $this->getHumanName() . ' Luminosity ' . $value . ' threshold : ' . $luminosity['threshold']);
+        if ($value < $luminosity['threshold']) {
           log::add('lightmanager', 'debug', $this->getHumanName() . ' Luminosity check => 1');
           return true;
         }
