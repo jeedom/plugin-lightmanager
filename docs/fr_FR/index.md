@@ -1,4 +1,4 @@
-# Light Manager
+# Light Manager  (Gestion Lumière)
 
 ## Description
 

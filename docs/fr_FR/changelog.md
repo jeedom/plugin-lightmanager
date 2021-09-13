@@ -1,4 +1,4 @@
-# Changelog light Manager
+# Changelog Light Manager (Gestion Lumière)
 
 >**IMPORTANT**
 >
