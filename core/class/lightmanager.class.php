@@ -164,9 +164,9 @@ class lightmanager extends eqLogic {
         }
       }
     }
-    $luminosityState = $this->getLuminosityState();
     if ($motionState) {
       log::add('lightmanager', 'debug', $this->getHumanName() . ' Motion detected, check luminosity');
+      $luminosityState = $this->getLuminosityState();
       if (!$luminosityState) {
         log::add('lightmanager', 'debug', $this->getHumanName() . ' Luminosity not ok, do nothing');
         return;
@@ -177,7 +177,11 @@ class lightmanager extends eqLogic {
       if ($this->getConfiguration('delay::off_no_motion') <= 0) {
         $this->lightOff();
       } else {
-        log::add('lightmanager', 'debug', $this->getHumanName() . ' Plan off light');
+        if (!$lightState) {
+          log::add('lightmanager', 'debug', $this->getHumanName() . ' Light is off nothing to do');
+          return;
+        }
+        log::add('lightmanager', 'debug', $this->getHumanName() . ' Light is on plan off light');
         $cron = new cron();
         $cron->setClass('lightmanager');
         $cron->setFunction('autoMotionLightOff');
@@ -239,7 +243,8 @@ class lightmanager extends eqLogic {
         if ($motion['enable'] != 1) {
           continue;
         }
-        $value = evaluate($motion['cmdMotion']);
+        $value = jeedom::evaluateExpression($motion['cmdMotion']);
+        log::add('lightmanager', 'debug', $this->getHumanName() . ' ' . $motion['cmdMotion'] . ' result : ' . $value);
         if ($value == 1) {
           log::add('lightmanager', 'debug', $this->getHumanName() . ' Motion check => 1');
           return true;
@@ -257,7 +262,18 @@ class lightmanager extends eqLogic {
         if ($luminosity['enable'] != 1) {
           continue;
         }
-        if (cmd::cmdToValue($luminosity['cmdLuminosity']) < $luminosity['threshold']) {
+        if (!isset($luminosity['min_last_min']) || $luminosity['min_last_min'] == 0) {
+          $value = cmd::cmdToValue($luminosity['cmdLuminosity']);
+        } else {
+          $cmd = cmd::byId(str_replace('#', '', $luminosity['cmdLuminosity']));
+          if (!is_object($cmd)) {
+            continue;
+          }
+          $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
+          $value = $stats['min'];
+        }
+        log::add('lightmanager', 'debug', $this->getHumanName() . ' Luminosity ' . $value . ' threshold : ' . $luminosity['threshold']);
+        if ($value < $luminosity['threshold']) {
           log::add('lightmanager', 'debug', $this->getHumanName() . ' Luminosity check => 1');
           return true;
         }
@@ -391,6 +407,7 @@ class lightmanager extends eqLogic {
     $listener->addEvent($this->getCmd(null, 'stateHandling')->getId());
     $listener->save();
   }
+
   public function preRemove() {
     $listener = listener::byClassAndFunction('lightmanager', 'mainMotionChange', array('lightmanager_id' => intval($this->getId())));
     if (is_object($listener)) {

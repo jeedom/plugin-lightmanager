@@ -218,6 +218,10 @@ function addLuminosity(_luminosity) {
   div += '<div class="col-sm-1 has-success">';
   div += '<input class="luminosityAttr form-control input-sm" data-l1key="threshold" value="0" />';
   div += '</div>';
+  div += '<label class="col-sm-1 control-label">{{Sur les X dernieres minutes}}</label>';
+  div += '<div class="col-sm-1 has-success">';
+  div += '<input class="luminosityAttr form-control input-sm" data-l1key="min_last_min" value="0" />';
+  div += '</div>';
   div += '</div>';
   $('#div_luminositys').append(div);
   $('#div_luminositys').find('.luminosity').last().setValues(_luminosity, '.luminosityAttr');
