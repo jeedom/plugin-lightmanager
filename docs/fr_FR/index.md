@@ -6,7 +6,7 @@ Ce plugin permet d'allumer ou d'eteindre la lumiere en fonction de la présence 
 
 ## Configuration
 
-Le plugin n'a aucun configuraiton spécifique
+Le plugin n'a aucun configuration spécifique
 
 ## Equipement
 
