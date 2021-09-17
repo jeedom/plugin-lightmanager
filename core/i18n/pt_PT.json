@@ -1,0 +1,65 @@
+{
+    "plugins\/lightmanager\/desktop\/php\/lightmanager.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Gestion": "Gestão",
+        "Ajouter": "Adicionar",
+        "Configuration": "Configuração",
+        "Mes lumières": "Minhas luzes",
+        "Rechercher": "Pesquisar",
+        "Configuration avancée": "Configuração avançada",
+        "Dupliquer": "Duplicado",
+        "Sauvegarder": "Para salvaguardar",
+        "Supprimer": "Deletar",
+        "Général": "Em geral",
+        "Lumière": "Luz",
+        "Mouvement": "Movimento",
+        "Luminosité": "Brilho",
+        "Temporisation": "Atraso de tempo",
+        "Commandes": "Pedidos",
+        "Nom de l'équipement": "Nome do equipamento",
+        "Nom de l'équipement template": "Modelo de nome de equipamento",
+        "Objet parent": "Objeto pai",
+        "Aucun": "Não",
+        "Catégorie": "Categoria",
+        "Activer": "Ativar",
+        "Visible": "Visível",
+        "Ajouter lumieres": "Adicionar luzes",
+        "Ajouter présence": "Adicionar presença",
+        "Ajouter luminosité": "Adicione brilho",
+        "Délai d'extinction après absence (min)": "Tempo de desligamento após ausência (min)",
+        "Débrayage automatique": "Desengate automático",
+        "Reprendre la main après (min)": "Retome o controle após (min)",
+        "Nom": "Nome",
+        "Options": "Opções",
+        "Action": "Açao"
+    },
+    "plugins\/lightmanager\/desktop\/js\/lightmanager.js": {
+        "Nom": "Nome",
+        "Afficher": "Exibição",
+        "Historiser": "Historize",
+        "Tester": "Teste",
+        "Lumière": "Luz",
+        "On": "Nós",
+        "Off": "Desligado",
+        "Etat": "Estado",
+        "Mouvement": "Movimento",
+        "Luminosité": "Brilho",
+        "Seuil": "Limiar",
+        "Sur les X dernieres minutes": "Nos últimos X minutos"
+    },
+    "plugins\/lightmanager\/core\/ajax\/lightmanager.ajax.php": {
+        "401 - Accès non autorisé": "401 - Acesso não autorizado",
+        "Aucune méthode correspondante à : ": "Nenhum método correspondente a:"
+    },
+    "plugins\/lightmanager\/core\/class\/lightmanager.class.php": {
+        "Etat gestion": "Gestão do estado",
+        "Suspendre": "Suspender",
+        "Reprendre": "Para retomar",
+        "Rafraichir": "Atualizar",
+        "On": "Nós",
+        "Off": "Desligado"
+    },
+    "info.json": {
+        "Plugin permettant la gestion des lumières": "Plugin para gerenciar luzes"
+    }
+}

@@ -1,0 +1,65 @@
+{
+    "plugins\/lightmanager\/desktop\/php\/lightmanager.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Gestion": "Gestión",
+        "Ajouter": "Agregar",
+        "Configuration": "Configuración",
+        "Mes lumières": "Mis luces",
+        "Rechercher": "Buscar",
+        "Configuration avancée": "Configuración avanzada",
+        "Dupliquer": "Duplicar",
+        "Sauvegarder": "Para salvaguardar",
+        "Supprimer": "Borrar",
+        "Général": "General",
+        "Lumière": "Luz",
+        "Mouvement": "Movimiento",
+        "Luminosité": "Brillo",
+        "Temporisation": "Tiempo de retardo",
+        "Commandes": "Pedidos",
+        "Nom de l'équipement": "Nombre del equipo",
+        "Nom de l'équipement template": "Plantilla de nombre de equipo",
+        "Objet parent": "Objeto padre",
+        "Aucun": "No",
+        "Catégorie": "Categoría",
+        "Activer": "Activar",
+        "Visible": "Visible",
+        "Ajouter lumieres": "Agregar luces",
+        "Ajouter présence": "Agregar presencia",
+        "Ajouter luminosité": "Agregar brillo",
+        "Délai d'extinction après absence (min)": "Tiempo de desconexión tras ausencia (min)",
+        "Débrayage automatique": "Desenganche automático",
+        "Reprendre la main après (min)": "Recuperar el control después de (min)",
+        "Nom": "Apellido",
+        "Options": "Opciones",
+        "Action": "Acción"
+    },
+    "plugins\/lightmanager\/desktop\/js\/lightmanager.js": {
+        "Nom": "Apellido",
+        "Afficher": "Monitor",
+        "Historiser": "Historizar",
+        "Tester": "Prueba",
+        "Lumière": "Luz",
+        "On": "Nosotros",
+        "Off": "Apagado",
+        "Etat": "Estado",
+        "Mouvement": "Movimiento",
+        "Luminosité": "Brillo",
+        "Seuil": "Umbral",
+        "Sur les X dernieres minutes": "Durante los últimos X minutos"
+    },
+    "plugins\/lightmanager\/core\/ajax\/lightmanager.ajax.php": {
+        "401 - Accès non autorisé": "401 - Acceso no autorizado",
+        "Aucune méthode correspondante à : ": "Ningún método correspondiente a:"
+    },
+    "plugins\/lightmanager\/core\/class\/lightmanager.class.php": {
+        "Etat gestion": "Administración del Estado",
+        "Suspendre": "Suspender",
+        "Reprendre": "Retomar",
+        "Rafraichir": "Actualizar",
+        "On": "Nosotros",
+        "Off": "Apagado"
+    },
+    "info.json": {
+        "Plugin permettant la gestion des lumières": "Complemento para administrar luces"
+    }
+}

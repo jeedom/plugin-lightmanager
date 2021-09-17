@@ -1,0 +1,65 @@
+{
+    "plugins\/lightmanager\/desktop\/php\/lightmanager.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Gestion": "Gestion",
+        "Ajouter": "Ajouter",
+        "Configuration": "Configuration",
+        "Mes lumières": "Mes lumières",
+        "Rechercher": "Rechercher",
+        "Configuration avancée": "Configuration avancée",
+        "Dupliquer": "Dupliquer",
+        "Sauvegarder": "Sauvegarder",
+        "Supprimer": "Supprimer",
+        "Général": "Général",
+        "Lumière": "Lumière",
+        "Mouvement": "Mouvement",
+        "Luminosité": "Luminosité",
+        "Temporisation": "Temporisation",
+        "Commandes": "Commandes",
+        "Nom de l'équipement": "Nom de l'équipement",
+        "Nom de l'équipement template": "Nom de l'équipement template",
+        "Objet parent": "Objet parent",
+        "Aucun": "Aucun",
+        "Catégorie": "Catégorie",
+        "Activer": "Activer",
+        "Visible": "Visible",
+        "Ajouter lumieres": "Ajouter lumieres",
+        "Ajouter présence": "Ajouter présence",
+        "Ajouter luminosité": "Ajouter luminosité",
+        "Délai d'extinction après absence (min)": "Délai d'extinction après absence (min)",
+        "Débrayage automatique": "Débrayage automatique",
+        "Reprendre la main après (min)": "Reprendre la main après (min)",
+        "Nom": "Nom",
+        "Options": "Options",
+        "Action": "Action"
+    },
+    "plugins\/lightmanager\/desktop\/js\/lightmanager.js": {
+        "Nom": "Nom",
+        "Afficher": "Afficher",
+        "Historiser": "Historiser",
+        "Tester": "Tester",
+        "Lumière": "Lumière",
+        "On": "On",
+        "Off": "Off",
+        "Etat": "Etat",
+        "Mouvement": "Mouvement",
+        "Luminosité": "Luminosité",
+        "Seuil": "Seuil",
+        "Sur les X dernieres minutes": "Sur les X dernieres minutes"
+    },
+    "plugins\/lightmanager\/core\/ajax\/lightmanager.ajax.php": {
+        "401 - Accès non autorisé": "401 - Accès non autorisé",
+        "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
+    },
+    "plugins\/lightmanager\/core\/class\/lightmanager.class.php": {
+        "Etat gestion": "Etat gestion",
+        "Suspendre": "Suspendre",
+        "Reprendre": "Reprendre",
+        "Rafraichir": "Rafraichir",
+        "On": "On",
+        "Off": "Off"
+    },
+    "info.json": {
+        "Plugin permettant la gestion des lumières": "Plugin permettant la gestion des lumières"
+    }
+}
