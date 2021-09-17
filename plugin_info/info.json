@@ -41,7 +41,8 @@
         "docker",
         "diy",
         "mobile",
-        "v4"
+        "v4",
+        "atlas"
     ],
     "changelog_beta": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automatisation\/lightmanager\/beta\/changelog",
     "documentation_beta": "https:\/\/doc.jeedom.com\/#language#\/plugins\/automatisation\/lightmanager\/beta"
