@@ -83,14 +83,14 @@ $('#bt_addLuminosity').off('click').on('click', function () {
 });
 
 $("#div_mainContainer").off('click','.listCmdInfo').on('click','.listCmdInfo',  function () {
-  var el = $(this).closest('.input-group').find('input');
+  var el = $(this).closest('.input-group').find('input.form-control');
   jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
     el.value(result.human);
   });
 });
 
 $("#div_mainContainer").off('click','.listCmdAction').on('click','.listCmdAction',  function () {
-  var el = $(this).closest('.input-group').find('input');
+  var el = $(this).closest('.input-group').find('input.form-control');
   jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
     el.value(result.human);
     if(el.closest('.form-group').find('.actionOptions').html() != undefined){
@@ -103,7 +103,7 @@ $("#div_mainContainer").off('click','.listCmdAction').on('click','.listCmdAction
 });
 
 $('body').off('focusout','.expressionAttr[data-l1key=cmdOn]').on('focusout','.expressionAttr[data-l1key=cmdOn]',  function (event) {
-  var el = $(this).closest('.input-group').find('input');
+  var el = $(this).closest('.input-group').find('input.form-control');
   var expression = $(this).closest('.form-group').getValues('.expressionAttr');
   jeedom.cmd.displayActionOption($(this).value(), init(expression[0].options), function (html) {
     el.closest('.form-group').find('.actionOptions').html(html);
