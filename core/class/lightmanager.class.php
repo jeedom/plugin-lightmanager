@@ -75,6 +75,14 @@ class lightmanager extends eqLogic {
     if ($lightmanager->getMotionState() && $lightmanager->getConfiguration('delay::off_no_motion') > 0) {
       log::add('lightmanager', 'debug', $lightmanager->getHumanName() . ' motion in progess do nothing');
       log::add('lightmanager', 'debug', $lightmanager->getHumanName() . ' Plan off light');
+$crons = cron::searchClassAndFunction('lightmanager', 'autoMotionLightOff', '"lightmanager_id":"' . $lightmanager->getId());
+    if (is_array($crons)) {
+      foreach ($crons as $cron) {
+        if ($cron->getState() != 'run') {
+          $cron->remove();
+        }
+      }
+    }
       $cron = new cron();
       $cron->setClass('lightmanager');
       $cron->setFunction('autoMotionLightOff');
