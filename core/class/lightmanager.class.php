@@ -99,10 +99,10 @@ class lightmanager extends eqLogic {
     log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] ' . json_encode($_options));
     $crons = cron::searchClassAndFunction('lightmanager', 'autoLightOff', '"lightmanager_id":"' . $lightmanager->getId());
     if (is_array($crons)) {
-      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] I need to remove previous plan cron');
+      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[handleStateLight] I need to remove previous plan cron, count ' . count($crons));
       foreach ($crons as $cron) {
+        log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[handleStateLight] Check if cron need to be remove : ' . $cron->getId() . ' state : ' . $cron->getState());
         if ($cron->getState() != 'run') {
-          log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] Remove cron : ' . $cron->getId());
           $cron->remove();
         }
       }
@@ -160,10 +160,10 @@ class lightmanager extends eqLogic {
     $this->setCache('lastMotionOrder', $motionState);
     $crons = cron::searchClassAndFunction('lightmanager', 'autoMotionLightOff', '"lightmanager_id":"' . $this->getId());
     if (is_array($crons)) {
-      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] I need to remove previous plan cron');
+      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] I need to remove previous plan cron, count ' . count($crons));
       foreach ($crons as $cron) {
+        log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Check if cron need to be remove : ' . $cron->getId() . ' state : ' . $cron->getState());
         if ($cron->getState() != 'run') {
-          log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Remove cron : ' . $cron->getId());
           $cron->remove();
         }
       }
