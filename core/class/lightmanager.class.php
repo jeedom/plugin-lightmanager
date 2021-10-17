@@ -99,10 +99,10 @@ class lightmanager extends eqLogic {
     log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] ' . json_encode($_options));
     $crons = cron::searchClassAndFunction('lightmanager', 'autoLightOff', '"lightmanager_id":"' . $lightmanager->getId());
     if (is_array($crons)) {
-      log::add('lightmanager', 'debug', $this->getHumanName() . '[mainHandleChange] I need to remove previous plan cron');
+      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] I need to remove previous plan cron');
       foreach ($crons as $cron) {
         if ($cron->getState() != 'run') {
-          log::add('lightmanager', 'debug', $this->getHumanName() . '[mainHandleChange] Remove cron : ' . $cron->getId());
+          log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] Remove cron : ' . $cron->getId());
           $cron->remove();
         }
       }
