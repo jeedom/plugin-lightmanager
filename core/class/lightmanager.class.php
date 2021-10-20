@@ -144,7 +144,11 @@ class lightmanager extends eqLogic {
   /*     * *********************Méthodes d'instance************************* */
 
   public function handleStateLight() {
-    log::add('lightmanager', 'debug', $this->getHumanName() . ' handleStateLight');
+    log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight]');
+    if ($this->getConfiguration('doNothingIf') != '' && jeedom::evaluateExpression($this->getConfiguration('doNothingIf'))) {
+      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Do nothing because ' . $this->getConfiguration('doNothingIf') . ' is true');
+      return;
+    }
     $stateHandling = $this->getCmd(null, 'stateHandling');
     if ($stateHandling->execCmd() == 0) {
       log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Handling disable, do nothing');
