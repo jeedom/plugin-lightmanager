@@ -26,7 +26,7 @@
         "Vous mettez votre capteur de luminosité ainsi que le seuil pour allumer la lumiere": "Sie setzen Ihren Lichtsensor und die Schwelle, um das Licht einzuschalten",
         "Il est possible d'en mettre plusieurs": "Es ist möglich, mehrere zu setzen",
         "Dans ce cas, si l'un des détecteurs tombe en-dessous de la valeur de seuil alors la lumière s'allumera lors d'un mouvement": "In diesem Fall wird das Licht während der Bewegung eingeschaltet, wenn einer der Melder den Schwellenwert unterschreitet",
-        "Vous pouvez aussi demander au plugin de plutot recuperer la valeur minimum de la luminosité sur les X dernieres minutes": "Sie können das Plugin auch bitten, stattdessen den Mindestwert der Helligkeit über die letzten X Minuten wiederherzustellen",
+        "Vous pouvez aussi demander au plugin de plutot recuperer la valeur minimum de la luminosité sur les X dernieres minutes, attention dans ce cas la il faut absolument que la commande de luminosité soit historisée": "Sie können das Plugin auch bitten, den minimalen Wert der Helligkeit über die letzten X Minuten abzurufen, in diesem Fall ist es unbedingt erforderlich, dass die Helligkeitssteuerung protokolliert wird",
         "Ici vous pouvez": "Hier kannst du",
         "Définir le délai d'extinction lorsqu'il n'y a plus de mouvement": "Stellen Sie die Ausschaltverzögerung ein, wenn keine Bewegung mehr erfolgt",
         "Activer ou non le débrayage si la lumière n'est pas dans l'état attendu (quelqu'un l'a allumée": "Aktivieren oder deaktivieren Sie die Ausschaltung, wenn das Licht nicht im erwarteten Zustand ist (jemand hat es eingeschaltet)",

@@ -26,7 +26,7 @@
         "Vous mettez votre capteur de luminosité ainsi que le seuil pour allumer la lumiere": "Pones tu sensor de luz y el umbral para encender la luz",
         "Il est possible d'en mettre plusieurs": "Es posible poner varios",
         "Dans ce cas, si l'un des détecteurs tombe en-dessous de la valeur de seuil alors la lumière s'allumera lors d'un mouvement": "En este caso, si uno de los detectores cae por debajo del valor umbral, la luz se encenderá durante el movimiento",
-        "Vous pouvez aussi demander au plugin de plutot recuperer la valeur minimum de la luminosité sur les X dernieres minutes": "En su lugar, también puede pedirle al complemento que recupere el valor mínimo del brillo durante los últimos X minutos",
+        "Vous pouvez aussi demander au plugin de plutot recuperer la valeur minimum de la luminosité sur les X dernieres minutes, attention dans ce cas la il faut absolument que la commande de luminosité soit historisée": "También puedes pedirle al plugin que recupere el valor mínimo de brillo de los últimos X minutos, ten cuidado en este caso es absolutamente necesario que el control de brillo esté registrado",
         "Ici vous pouvez": "Aquí puedes",
         "Définir le délai d'extinction lorsqu'il n'y a plus de mouvement": "Establecer el retardo de apagado cuando no hay más movimiento",
         "Activer ou non le débrayage si la lumière n'est pas dans l'état attendu (quelqu'un l'a allumée": "Activar o no la desconexión si la luz no está en el estado esperado (alguien la encendió",

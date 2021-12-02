@@ -26,7 +26,7 @@
         "Vous mettez votre capteur de luminosité ainsi que le seuil pour allumer la lumiere": "You put your light sensor and the threshold to turn on the light",
         "Il est possible d'en mettre plusieurs": "It is possible to put several",
         "Dans ce cas, si l'un des détecteurs tombe en-dessous de la valeur de seuil alors la lumière s'allumera lors d'un mouvement": "In this case, if one of the detectors falls below the threshold value then the light will turn on during movement",
-        "Vous pouvez aussi demander au plugin de plutot recuperer la valeur minimum de la luminosité sur les X dernieres minutes": "You can also ask the plugin to recover the minimum value of the brightness over the last X minutes instead",
+        "Vous pouvez aussi demander au plugin de plutot recuperer la valeur minimum de la luminosité sur les X dernieres minutes, attention dans ce cas la il faut absolument que la commande de luminosité soit historisée": "You can also ask the plugin to retrieve the minimum value of the brightness over the last X minutes, be careful in this case it is absolutely necessary that the brightness control is logged",
         "Ici vous pouvez": "Here you can",
         "Définir le délai d'extinction lorsqu'il n'y a plus de mouvement": "Set the switch-off delay when there is no more movement",
         "Activer ou non le débrayage si la lumière n'est pas dans l'état attendu (quelqu'un l'a allumée": "Activate or not the disengagement if the light is not in the expected state (someone turned it on",
