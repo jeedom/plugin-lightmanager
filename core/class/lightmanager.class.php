@@ -277,8 +277,14 @@ class lightmanager extends eqLogic {
           if (!is_object($cmd)) {
             continue;
           }
+          if (!$cmd->getIsHistorized()) {
+            throw new Exception(__('Impossible de calculer la luminositée car la commande n\'est pas historisée', __FILE__) . ' : ' . $luminosity['cmdLuminosity']);
+          }
           $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
           $value = $stats['min'];
+          if ($value === '') {
+            $value = 0;
+          }
         }
         log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity ' . $value . ' threshold : ' . $luminosity['threshold']);
         if ($value < $luminosity['threshold']) {
