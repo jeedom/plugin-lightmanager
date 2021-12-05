@@ -53,6 +53,7 @@
         "Aucune méthode correspondante à : ": "Keine Methode entsprechend:"
     },
     "plugins\/lightmanager\/core\/class\/lightmanager.class.php": {
+        "Impossible de calculer la luminositée car la commande n\\'est pas historisée": "Helligkeit kann nicht berechnet werden, da der Befehl nicht protokolliert wird",
         "Etat gestion": "Staatliche Verwaltung",
         "Suspendre": "Aussetzen",
         "Reprendre": "Wieder aufzunehmen",

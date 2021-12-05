@@ -53,6 +53,7 @@
         "Aucune méthode correspondante à : ": "Aucune méthode correspondante à : "
     },
     "plugins\/lightmanager\/core\/class\/lightmanager.class.php": {
+        "Impossible de calculer la luminositée car la commande n\\'est pas historisée": "Impossible de calculer la luminositée car la commande n\\'est pas historisée",
         "Etat gestion": "Etat gestion",
         "Suspendre": "Suspendre",
         "Reprendre": "Reprendre",
