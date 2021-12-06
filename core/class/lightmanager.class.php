@@ -283,7 +283,7 @@ class lightmanager extends eqLogic {
           $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
           $value = $stats['min'];
           if ($value === '') {
-            $value = 0;
+            $value = $cmd->execCmd();
           }
         }
         log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity ' . $value . ' threshold : ' . $luminosity['threshold']);
