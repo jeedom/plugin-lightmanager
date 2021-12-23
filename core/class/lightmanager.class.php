@@ -282,7 +282,7 @@ class lightmanager extends eqLogic {
           }
           $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
           $value = $stats['min'];
-          if ($value === '') {
+          if (!isset($stats['min']) || $value === null) {
             $value = $cmd->execCmd();
           }
         }
