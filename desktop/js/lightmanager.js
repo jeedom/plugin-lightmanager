@@ -83,31 +83,31 @@ $('#bt_addLuminosity').off('click').on('click', function () {
 });
 
 $("#div_mainContainer").off('click','.listCmdInfo').on('click','.listCmdInfo',  function () {
-  var el = $(this).closest('.input-group').find('input');
+  var el = $(this).closest('.input-group').find('input.form-control');
   jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
     el.value(result.human);
   });
 });
 
 $("#div_mainContainer").off('click','.listCmdAction').on('click','.listCmdAction',  function () {
-  var el = $(this).closest('.input-group').find('input');
+  var el = $(this).closest('.input-group').find('input.form-control');
   jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function (result) {
     el.value(result.human);
     if(el.closest('.form-group').find('.actionOptions').html() != undefined){
       jeedom.cmd.displayActionOption(result.human, '', function (html) {
         el.closest('.form-group').find('.actionOptions').html(html);
-        taAutosize();
+        jeedomUtils.taAutosize();
       });
     }
   });
 });
 
 $('body').off('focusout','.expressionAttr[data-l1key=cmdOn]').on('focusout','.expressionAttr[data-l1key=cmdOn]',  function (event) {
-  var el = $(this).closest('.input-group').find('input');
+  var el = $(this).closest('.input-group').find('input.form-control');
   var expression = $(this).closest('.form-group').getValues('.expressionAttr');
   jeedom.cmd.displayActionOption($(this).value(), init(expression[0].options), function (html) {
     el.closest('.form-group').find('.actionOptions').html(html);
-    taAutosize();
+    jeedomUtils.taAutosize();
   })
 });
 
@@ -133,7 +133,7 @@ function addLight(_light) {
   div += '</span>';
   div += '</div>';
   div += '</div>';
-  var actionOption_id = uniqId();
+  var actionOption_id = jeedomUtils.uniqId();
   div += '<div class="col-sm-5 actionOptions" id="'+actionOption_id+'"></div>';
   div += '</div>';
   div += '<div class="form-group">';
@@ -259,7 +259,7 @@ function printEqLogic(_eqLogic) {
       for(var i in data){
         $('#'+data[i].id).append(data[i].html.html);
       }
-      taAutosize();
+      jeedomUtils.taAutosize();
     }
   });
 }

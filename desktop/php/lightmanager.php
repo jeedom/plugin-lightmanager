@@ -9,7 +9,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 
 <div class="row row-overflow">
 	<div class="col-xs-12 eqLogicThumbnailDisplay">
-		<legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
+		<legend><i class="fas fa-cog"></i> {{Gestion}}</legend>
 		<div class="eqLogicThumbnailContainer">
 			<div class="cursor eqLogicAction logoPrimary" data-action="add">
 				<i class="fas fa-plus-circle"></i>
@@ -23,12 +23,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			</div>
 		</div>
 		<legend><i class="fas fa-table"></i> {{Mes lumières}}</legend>
-		<input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+		<div class="input-group" style="margin:5px;">
+			<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+			<div class="input-group-btn">
+				<a id="bt_resetSearch" class="btn roundedRight" style="width:30px"><i class="fas fa-times"></i></a>
+				<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>
+			</div>
+		</div>
 		<div class="eqLogicThumbnailContainer">
 			<?php
 			foreach ($eqLogics as $eqLogic) {
 				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+				echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
 				echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
 				echo '<br>';
 				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
@@ -37,7 +43,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			?>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12 eqLogic" style="display: none;">
 		<div class="input-group pull-right" style="display:inline-flex">
 			<span class="input-group-btn">
@@ -55,18 +61,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
 		</ul>
 		<div class="tab-content" style="height:calc(100% - 50px);overflow:auto;overflow-x: hidden;">
 			<div role="tabpanel" class="tab-pane active" id="eqlogictab">
-				<br/>
+				<br />
 				<form class="form-horizontal">
 					<fieldset>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{Nom de l'équipement}}</label>
 							<div class="col-sm-3">
 								<input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
-								<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement template}}"/>
+								<input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l'équipement template}}" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label" >{{Objet parent}}</label>
+							<label class="col-sm-3 control-label">{{Objet parent}}</label>
 							<div class="col-sm-3">
 								<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
 									<option value="">{{Aucun}}</option>
@@ -95,8 +101,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
 						<div class="form-group">
 							<label class="col-sm-3 control-label"></label>
 							<div class="col-sm-9">
-								<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked/>{{Activer}}</label>
-								<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked/>{{Visible}}</label>
+								<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isEnable" checked />{{Activer}}</label>
+								<label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="isVisible" checked />{{Visible}}</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">{{Ne rien faire automatiquement si}}</label>
+							<div class="col-sm-6">
+								<div class="input-group">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="doNothingIf" />
+									<span class="input-group-btn">
+										<a class="btn listCmdInfo btn-default roundedRight" data-atCaret="1"><i class="fa fa-list-alt"></i></a>
+									</span>
+								</div>
 							</div>
 						</div>
 					</fieldset>
@@ -104,12 +121,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			</div>
 			<div role="tabpanel" class="tab-pane" id="lighttab">
 				<a class="btn btn-success btn-xs pull-right" id="bt_addLight"><i class="fas fa-plus-circle"></i> {{Ajouter lumieres}}</a>
-				<br/><br/>
+				<br /><br />
 				<div id="div_lights"></div>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="motiontab">
 				<a class="btn btn-success btn-xs pull-right" id="bt_addMotion"><i class="fas fa-plus-circle"></i> {{Ajouter présence}}</a>
-				<br/><br/>
+				<br /><br />
 				<form class="form-horizontal">
 					<fieldset>
 						<div id="div_motions"></div>
@@ -118,7 +135,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			</div>
 			<div role="tabpanel" class="tab-pane" id="luminositytab">
 				<a class="btn btn-success btn-xs pull-right" id="bt_addLuminosity"><i class="fas fa-plus-circle"></i> {{Ajouter luminosité}}</a>
-				<br/><br/>
+				<br /><br />
 				<form class="form-horizontal">
 					<fieldset>
 						<div id="div_luminositys"></div>
@@ -126,7 +143,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				</form>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="timmertab">
-				<br/>
+				<br />
 				<form class="form-horizontal">
 					<fieldset>
 						<div class="form-group">
@@ -151,11 +168,13 @@ $eqLogics = eqLogic::byType($plugin->getId());
 				</form>
 			</div>
 			<div role="tabpanel" class="tab-pane" id="commandtab">
-				<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br/><br/>
+				<a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Commandes}}</a><br /><br />
 				<table id="table_cmd" class="table table-bordered table-condensed">
 					<thead>
 						<tr>
-							<th>{{Nom}}</th><th>{{Options}}</th><th>{{Action}}</th>
+							<th>{{Nom}}</th>
+							<th>{{Options}}</th>
+							<th>{{Action}}</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -166,5 +185,5 @@ $eqLogics = eqLogic::byType($plugin->getId());
 	</div>
 </div>
 
-<?php include_file('desktop', 'lightmanager', 'js', 'lightmanager');?>
-<?php include_file('core', 'plugin.template', 'js');?>
+<?php include_file('desktop', 'lightmanager', 'js', 'lightmanager'); ?>
+<?php include_file('core', 'plugin.template', 'js'); ?>

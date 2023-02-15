@@ -1,0 +1,67 @@
+{
+    "plugins\/lightmanager\/desktop\/php\/lightmanager.php": {
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "Gestion": "Verwaltung",
+        "Ajouter": "Hinzufügen",
+        "Configuration": "Aufbau",
+        "Mes lumières": "Meine Lichter",
+        "Rechercher": "Forschen",
+        "Configuration avancée": "Erweiterte Konfiguration",
+        "Dupliquer": "Duplikat",
+        "Sauvegarder": "Um zu schützen",
+        "Supprimer": "Löschen",
+        "Général": "Allgemein",
+        "Lumière": "Hell",
+        "Mouvement": "Bewegung",
+        "Luminosité": "Helligkeit",
+        "Temporisation": "Zeitverzögerung",
+        "Commandes": "Aufträge",
+        "Nom de l'équipement": "Ausrüstungsname",
+        "Nom de l'équipement template": "Vorlage für Gerätenamen",
+        "Objet parent": "Übergeordnetes Objekt",
+        "Aucun": "Nein",
+        "Catégorie": "Kategorie",
+        "Activer": "Aktivieren Sie",
+        "Visible": "Sichtbar",
+        "Ne rien faire automatiquement si": "Nichts automatisch tun, wenn",
+        "Ajouter lumieres": "Lichter hinzufügen",
+        "Ajouter présence": "Präsenz hinzufügen",
+        "Ajouter luminosité": "Helligkeit hinzufügen",
+        "Délai d'extinction après absence (min)": "Ausschaltzeit nach Abwesenheit (min)",
+        "Débrayage automatique": "Automatisches Auskuppeln",
+        "Reprendre la main après (min)": "Übernehmen Sie die Kontrolle nach (min)",
+        "Nom": "Name",
+        "Options": "Optionen",
+        "Action": "Handlung"
+    },
+    "plugins\/lightmanager\/desktop\/js\/lightmanager.js": {
+        "Nom": "Name",
+        "Afficher": "Anzeige",
+        "Historiser": "Historisieren",
+        "Tester": "Prüfen",
+        "Lumière": "Hell",
+        "On": "Wir",
+        "Off": "Aus",
+        "Etat": "Zustand",
+        "Mouvement": "Bewegung",
+        "Luminosité": "Helligkeit",
+        "Seuil": "Schwelle",
+        "Sur les X dernieres minutes": "In den letzten X Minuten"
+    },
+    "plugins\/lightmanager\/core\/ajax\/lightmanager.ajax.php": {
+        "401 - Accès non autorisé": "401 - Unbefugter Zugriff",
+        "Aucune méthode correspondante à : ": "Keine Methode entsprechend:"
+    },
+    "plugins\/lightmanager\/core\/class\/lightmanager.class.php": {
+        "Impossible de calculer la luminositée car la commande n\\'est pas historisée": "Helligkeit kann nicht berechnet werden, da der Befehl nicht protokolliert wird",
+        "Etat gestion": "Staatliche Verwaltung",
+        "Suspendre": "Aussetzen",
+        "Reprendre": "Wieder aufzunehmen",
+        "Rafraichir": "Aktualisierung",
+        "On": "Wir",
+        "Off": "Aus"
+    },
+    "info.json": {
+        "Plugin permettant la gestion des lumières": "Plugin zum Verwalten von Lichtern"
+    }
+}

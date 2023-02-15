@@ -1,0 +1,67 @@
+{
+    "plugins\/lightmanager\/desktop\/php\/lightmanager.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "Gestion": "Management",
+        "Ajouter": "Add",
+        "Configuration": "Configuration",
+        "Mes lumières": "My lights",
+        "Rechercher": "To research",
+        "Configuration avancée": "Advanced configuration",
+        "Dupliquer": "Duplicate",
+        "Sauvegarder": "To safeguard",
+        "Supprimer": "To delete",
+        "Général": "General",
+        "Lumière": "Light",
+        "Mouvement": "Movement",
+        "Luminosité": "Brightness",
+        "Temporisation": "Time delay",
+        "Commandes": "Orders",
+        "Nom de l'équipement": "Equipment name",
+        "Nom de l'équipement template": "Equipment name template",
+        "Objet parent": "Parent object",
+        "Aucun": "No",
+        "Catégorie": "Category",
+        "Activer": "Activate",
+        "Visible": "Visible",
+        "Ne rien faire automatiquement si": "Do nothing automatically if",
+        "Ajouter lumieres": "Add lights",
+        "Ajouter présence": "Add presence",
+        "Ajouter luminosité": "Add brightness",
+        "Délai d'extinction après absence (min)": "Switch-off time after absence (min)",
+        "Débrayage automatique": "Automatic disengagement",
+        "Reprendre la main après (min)": "Take back control after (min)",
+        "Nom": "Name",
+        "Options": "Options",
+        "Action": "Stock"
+    },
+    "plugins\/lightmanager\/desktop\/js\/lightmanager.js": {
+        "Nom": "Name",
+        "Afficher": "Display",
+        "Historiser": "Historize",
+        "Tester": "Test",
+        "Lumière": "Light",
+        "On": "We",
+        "Off": "Off",
+        "Etat": "State",
+        "Mouvement": "Movement",
+        "Luminosité": "Brightness",
+        "Seuil": "Threshold",
+        "Sur les X dernieres minutes": "Over the last X minutes"
+    },
+    "plugins\/lightmanager\/core\/ajax\/lightmanager.ajax.php": {
+        "401 - Accès non autorisé": "401 - Unauthorized Access",
+        "Aucune méthode correspondante à : ": "No method corresponding to:"
+    },
+    "plugins\/lightmanager\/core\/class\/lightmanager.class.php": {
+        "Impossible de calculer la luminositée car la commande n\\'est pas historisée": "Unable to calculate the brightness because the command is not logged",
+        "Etat gestion": "State management",
+        "Suspendre": "To suspend",
+        "Reprendre": "To resume",
+        "Rafraichir": "Refresh",
+        "On": "We",
+        "Off": "Off"
+    },
+    "info.json": {
+        "Plugin permettant la gestion des lumières": "Plugin for managing lights"
+    }
+}

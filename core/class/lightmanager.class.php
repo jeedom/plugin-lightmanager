@@ -97,12 +97,12 @@ class lightmanager extends eqLogic {
       sleep($_options['seconds']);
     }
     log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] ' . json_encode($_options));
-    $crons = cron::searchClassAndFunction('lightmanager', 'autoLightOff', '"lightmanager_id":"' . $lightmanager->getId());
+    $crons = cron::searchClassAndFunction('lightmanager', 'autoLightOff', '"lightmanager_id":' . $lightmanager->getId());
     if (is_array($crons)) {
-      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] I need to remove previous plan cron');
+      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[handleStateLight] I need to remove previous plan cron, count ' . count($crons));
       foreach ($crons as $cron) {
+        log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[handleStateLight] Check if cron need to be remove : ' . $cron->getId() . ' state : ' . $cron->getState());
         if ($cron->getState() != 'run') {
-          log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] Remove cron : ' . $cron->getId());
           $cron->remove();
         }
       }
@@ -144,7 +144,11 @@ class lightmanager extends eqLogic {
   /*     * *********************Méthodes d'instance************************* */
 
   public function handleStateLight() {
-    log::add('lightmanager', 'debug', $this->getHumanName() . ' handleStateLight');
+    log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight]');
+    if ($this->getConfiguration('doNothingIf') != '' && jeedom::evaluateExpression($this->getConfiguration('doNothingIf'))) {
+      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Do nothing because ' . $this->getConfiguration('doNothingIf') . ' is true');
+      return;
+    }
     $stateHandling = $this->getCmd(null, 'stateHandling');
     if ($stateHandling->execCmd() == 0) {
       log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Handling disable, do nothing');
@@ -158,12 +162,12 @@ class lightmanager extends eqLogic {
     }
     $motionState = $this->getMotionState();
     $this->setCache('lastMotionOrder', $motionState);
-    $crons = cron::searchClassAndFunction('lightmanager', 'autoMotionLightOff', '"lightmanager_id":"' . $this->getId());
+    $crons = cron::searchClassAndFunction('lightmanager', 'autoMotionLightOff', 'lightmanager_id":' . $this->getId());
     if (is_array($crons)) {
-      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] I need to remove previous plan cron');
+      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] I need to remove previous plan cron, count ' . count($crons));
       foreach ($crons as $cron) {
+        log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Check if cron need to be remove : ' . $cron->getId() . ' state : ' . $cron->getState());
         if ($cron->getState() != 'run') {
-          log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Remove cron : ' . $cron->getId());
           $cron->remove();
         }
       }
@@ -273,8 +277,14 @@ class lightmanager extends eqLogic {
           if (!is_object($cmd)) {
             continue;
           }
+          if (!$cmd->getIsHistorized()) {
+            throw new Exception(__('Impossible de calculer la luminositée car la commande n\'est pas historisée', __FILE__) . ' : ' . $luminosity['cmdLuminosity']);
+          }
           $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
           $value = $stats['min'];
+          if (!isset($stats['min']) || $value === null) {
+            $value = $cmd->execCmd();
+          }
         }
         log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity ' . $value . ' threshold : ' . $luminosity['threshold']);
         if ($value < $luminosity['threshold']) {
