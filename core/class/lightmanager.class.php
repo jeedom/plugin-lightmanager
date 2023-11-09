@@ -265,32 +265,34 @@ class lightmanager extends eqLogic {
 
   public function getLuminosityState() {
     $luminositys = $this->getConfiguration('luminositys', '');
-    if ($luminositys != '') {
-      foreach ($luminositys as $luminosity) {
-        if ($luminosity['enable'] != 1) {
+    if($luminositys != '' || count($luminositys) == 0){
+        log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] No Luminosity to check');
+        return true;
+    }
+    foreach ($luminositys as $luminosity) {
+      if ($luminosity['enable'] != 1) {
+        continue;
+      }
+      if (!isset($luminosity['min_last_min']) || $luminosity['min_last_min'] == 0) {
+        $value = cmd::cmdToValue($luminosity['cmdLuminosity']);
+      } else {
+        $cmd = cmd::byId(str_replace('#', '', $luminosity['cmdLuminosity']));
+        if (!is_object($cmd)) {
           continue;
         }
-        if (!isset($luminosity['min_last_min']) || $luminosity['min_last_min'] == 0) {
-          $value = cmd::cmdToValue($luminosity['cmdLuminosity']);
-        } else {
-          $cmd = cmd::byId(str_replace('#', '', $luminosity['cmdLuminosity']));
-          if (!is_object($cmd)) {
-            continue;
-          }
-          if (!$cmd->getIsHistorized()) {
-            throw new Exception(__('Impossible de calculer la luminositée car la commande n\'est pas historisée', __FILE__) . ' : ' . $luminosity['cmdLuminosity']);
-          }
-          $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
-          $value = $stats['min'];
-          if (!isset($stats['min']) || $value === null) {
-            $value = $cmd->execCmd();
-          }
+        if (!$cmd->getIsHistorized()) {
+          throw new Exception(__('Impossible de calculer la luminositée car la commande n\'est pas historisée', __FILE__) . ' : ' . $luminosity['cmdLuminosity']);
         }
-        log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity ' . $value . ' threshold : ' . $luminosity['threshold']);
-        if ($value < $luminosity['threshold']) {
-          log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity check => 1');
-          return true;
+        $stats = $cmd->getStatistique(date('Y-m-d H:i:s', strtotime('now -' . $luminosity['min_last_min'] . ' min')), date('Y-m-d H:i:s', strtotime('now')));
+        $value = $stats['min'];
+        if (!isset($stats['min']) || $value === null) {
+          $value = $cmd->execCmd();
         }
+      }
+      log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity ' . $value . ' threshold : ' . $luminosity['threshold']);
+      if ($value < $luminosity['threshold']) {
+        log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity check => 1');
+        return true;
       }
     }
     log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] Luminosity check => 0');
