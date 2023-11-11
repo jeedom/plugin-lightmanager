@@ -265,7 +265,7 @@ class lightmanager extends eqLogic {
 
   public function getLuminosityState() {
     $luminositys = $this->getConfiguration('luminositys', '');
-    if($luminositys != '' || count($luminositys) == 0){
+    if($luminositys == '' || count($luminositys) == 0){
         log::add('lightmanager', 'debug', $this->getHumanName() . '[getLuminosityState] No Luminosity to check');
         return true;
     }
