@@ -253,6 +253,9 @@ class lightmanager extends eqLogic {
         }
         $value = jeedom::evaluateExpression($motion['cmdMotion']);
         log::add('lightmanager', 'debug', $this->getHumanName() . ' ' . $motion['cmdMotion'] . ' result : ' . $value);
+        if ($motion['invert'] != 1) {
+          $value = 1 - $value;
+        }
         if ($value == 1) {
           log::add('lightmanager', 'debug', $this->getHumanName() . '[getMotionState] Motion check => 1');
           return true;
