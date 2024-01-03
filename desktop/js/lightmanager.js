@@ -189,6 +189,9 @@ function addMotion(_motion) {
   div += '</span>';
   div += '</div>';
   div += '</div>';
+  div += '<div class="col-sm-1 has-success">';
+  div += '<label><input type="checkbox" class="motionAttr checkbox-inline" data-l1key="invert" />{{Inverser}}</label>';
+  div += '</div>';
   div += '</div>';
   div += '</div>';
   $('#div_motions').append(div);
