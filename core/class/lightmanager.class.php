@@ -253,7 +253,7 @@ class lightmanager extends eqLogic {
         }
         $value = jeedom::evaluateExpression($motion['cmdMotion']);
         log::add('lightmanager', 'debug', $this->getHumanName() . ' ' . $motion['cmdMotion'] . ' result : ' . $value);
-        if ($motion['invert'] != 1) {
+        if (isset($motion['invert']) && $motion['invert'] == 1) {
           $value = 1 - $value;
         }
         if ($value == 1) {
