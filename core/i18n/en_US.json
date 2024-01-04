@@ -44,6 +44,7 @@
         "Off": "Off",
         "Etat": "State",
         "Mouvement": "Movement",
+        "Inverser": "Reverse",
         "Luminosité": "Brightness",
         "Seuil": "Threshold",
         "Sur les X dernieres minutes": "Over the last X minutes"
