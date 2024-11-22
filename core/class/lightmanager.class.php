@@ -72,7 +72,8 @@ class lightmanager extends eqLogic {
       log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoLightOff] handling disable, do nothing');
       return;
     }
-    if ($lightmanager->getMotionState() && $lightmanager->getConfiguration('delay::off_no_motion') > 0) {
+    $delay_off_no_motion = jeedom::evaluateExpression($lightmanager->getConfiguration('delay::off_no_motion'));
+    if ($lightmanager->getMotionState() && $delay_off_no_motion > 0) {
       log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoLightOff] motion in progess do nothing');
       log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoLightOff] Plan off light');
       $cron = new cron();
@@ -81,7 +82,7 @@ class lightmanager extends eqLogic {
       $cron->setOption(array('lightmanager_id' => intval($lightmanager->getId()), 'seconds' => date('s')));
       $cron->setLastRun(date('Y-m-d H:i:s'));
       $cron->setOnce(1);
-      $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $lightmanager->getConfiguration('delay::off_no_motion')));
+      $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $delay_off_no_motion));
       $cron->save();
       return;
     }
@@ -182,7 +183,8 @@ class lightmanager extends eqLogic {
       $this->lightOn();
     } else {
       log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] No motion check off light');
-      if ($this->getConfiguration('delay::off_no_motion') <= 0) {
+      $delay_off_no_motion = jeedom::evaluateExpression($this->getConfiguration('delay::off_no_motion'));
+      if ($delay_off_no_motion <= 0) {
         $this->lightOff();
       } else {
         if (!$lightState) {
@@ -196,7 +198,7 @@ class lightmanager extends eqLogic {
         $cron->setOption(array('lightmanager_id' => intval($this->getId()), 'seconds' => date('s')));
         $cron->setLastRun(date('Y-m-d H:i:s'));
         $cron->setOnce(1);
-        $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $this->getConfiguration('delay::off_no_motion')));
+        $cron->setSchedule(cron::convertDateToCron(strtotime('now') + 60 * $delay_off_no_motion));
         $cron->save();
       }
     }
