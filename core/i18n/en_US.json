@@ -40,7 +40,7 @@
         "Historiser": "Historize",
         "Tester": "Test",
         "Lumière": "Light",
-        "On": "We",
+        "On": "On",
         "Off": "Off",
         "Etat": "State",
         "Mouvement": "Movement",
@@ -59,7 +59,7 @@
         "Suspendre": "To suspend",
         "Reprendre": "To resume",
         "Rafraichir": "Refresh",
-        "On": "We",
+        "On": "On",
         "Off": "Off"
     },
     "info.json": {

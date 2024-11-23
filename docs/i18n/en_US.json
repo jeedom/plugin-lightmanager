@@ -3,6 +3,7 @@
         "Changelog Gestion Lumières": "Changelog Lighting Management",
         "Changelog Light Manager (Gestion Lumière": "Changelog Light Manager",
         "Pour rappel s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de texte": "As a reminder, if there is no information on the update, it is because it concerns only the update of documentation, translation or text",
+        "Support d'une variable pour le delai avant extinction": "Support for a variable for the delay before extinction",
         "08\/01\/2024": "01\/08\/2024",
         "Préparation pour jeedom 4.4": "Preparing for jeedom 4.4",
         "Possibilité d'inverser les capteurs de mouvement": "Ability to reverse motion sensors",
