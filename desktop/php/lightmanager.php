@@ -149,7 +149,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 						<div class="form-group">
 							<label class="col-sm-3 control-label">{{Délai d'extinction après absence (min)}}</label>
 							<div class="col-sm-3">
-								<input type="number" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay::off_no_motion" />
+								<input class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="delay::off_no_motion" />
 							</div>
 						</div>
 						<div class="form-group">
