@@ -33,7 +33,7 @@ class lightmanager extends eqLogic {
     if (isset($_options['seconds']) && $_options['seconds'] > 0) {
       sleep($_options['seconds']);
     }
-    log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoMotionLightOff] ' . json_encode($_options));
+    log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainMotionChange] ' . json_encode($_options));
     $lightmanager->handleStateLight();
   }
 
@@ -48,7 +48,7 @@ class lightmanager extends eqLogic {
     log::add('lightmanager', 'debug', $lightmanager->getHumanName() . ' autoMotionLightOff => ' . json_encode($_options));
     $stateHandling = $lightmanager->getCmd(null, 'stateHandling');
     if ($stateHandling->execCmd() == 0) {
-      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoMotionLightOff] handling disable, do nothing');
+      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoMotionLightOff] handling disabled, do nothing');
       return;
     }
     if ($lightmanager->getMotionState()) {
@@ -69,7 +69,7 @@ class lightmanager extends eqLogic {
     log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoLightOff] autoLightOff => ' . json_encode($_options));
     $stateHandling = $lightmanager->getCmd(null, 'stateHandling');
     if ($stateHandling->execCmd() == 0) {
-      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoLightOff] handling disable, do nothing');
+      log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[autoLightOff] handling disabled, do nothing');
       return;
     }
     $delay_off_no_motion = jeedom::evaluateExpression($lightmanager->getConfiguration('delay::off_no_motion'));
@@ -99,7 +99,7 @@ class lightmanager extends eqLogic {
     }
     log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[mainHandleChange] ' . json_encode($_options));
     $crons = cron::searchClassAndFunction('lightmanager', 'autoLightOff', '"lightmanager_id":' . $lightmanager->getId());
-    if (is_array($crons)) {
+    if (is_array($crons) && count($crons) > 0) {
       log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[handleStateLight] I need to remove previous plan cron, count ' . count($crons));
       foreach ($crons as $cron) {
         log::add('lightmanager', 'debug', $lightmanager->getHumanName() . '[handleStateLight] Check if cron need to be remove : ' . $cron->getId() . ' state : ' . $cron->getState());
@@ -152,19 +152,19 @@ class lightmanager extends eqLogic {
     }
     $stateHandling = $this->getCmd(null, 'stateHandling');
     if ($stateHandling->execCmd() == 0) {
-      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Handling disable, do nothing');
+      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Handling disabled, do nothing');
       return;
     }
     $lightState = $this->getLightState();
     if ($lightState != $this->getCache('lastLightOrder', $lightState) && $this->getConfiguration('auto_walkout') == 1) {
-      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Light state no same that last order, do nothing');
+      log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Light state no same that last order, disable handling');
       $stateHandling->event(0);
       return;
     }
     $motionState = $this->getMotionState();
     $this->setCache('lastMotionOrder', $motionState);
     $crons = cron::searchClassAndFunction('lightmanager', 'autoMotionLightOff', 'lightmanager_id":' . $this->getId());
-    if (is_array($crons)) {
+    if (is_array($crons) && count($crons) > 0) {
       log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] I need to remove previous plan cron, count ' . count($crons));
       foreach ($crons as $cron) {
         log::add('lightmanager', 'debug', $this->getHumanName() . '[handleStateLight] Check if cron need to be remove : ' . $cron->getId() . ' state : ' . $cron->getState());
@@ -254,7 +254,7 @@ class lightmanager extends eqLogic {
           continue;
         }
         $value = jeedom::evaluateExpression($motion['cmdMotion']);
-        log::add('lightmanager', 'debug', $this->getHumanName() . ' ' . $motion['cmdMotion'] . ' result : ' . $value);
+        log::add('lightmanager', 'debug', $this->getHumanName() . '[getMotionState] ' . $motion['cmdMotion'] . ' result : ' . $value);
         if (isset($motion['invert']) && $motion['invert'] == 1) {
           $value = 1 - $value;
         }
